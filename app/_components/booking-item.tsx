@@ -1,7 +1,6 @@
 import { Avatar, AvatarImage } from "./ui/avatar"; // Avatar importado do componente UI
 import { Badge } from "./ui/badge"; // Badge importado do componente UI
 import { Card } from "./ui/card"; // Card importado do componente UI
-import Image from "next/image"; // Componente de imagem do Next.js
 
 interface BookingItemProps {
   serviceName: string;
