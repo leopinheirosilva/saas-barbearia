@@ -8,6 +8,9 @@ import { Calendar } from "./ui/calendar";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { useAction } from "next-safe-action/hooks";
+import { createBooking } from "../_actions/create-booking";
+import { toast } from "sonner";
 
 const calendarStyle = `
   :where(.booking-calendar [data-selected-single=true]) {
@@ -49,11 +52,33 @@ export function BookingSheet({
   const [selectedTime, setSelectedTime] = useState<string | undefined>(
     undefined,
   );
+  const { executeAsync, isPending } = useAction(createBooking);
 
   const priceInReaisInteger = Math.floor(service.priceInCents / 100);
   const isConfirmEnabled = selectedDate && selectedTime;
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
+    if (!selectedTime || !selectedDate) {
+      return;
+    }
+    const timeSplitted = selectedTime?.split(":");
+    const hours = timeSplitted[0];
+    const minutes = timeSplitted[1];
+    const date = new Date(selectedDate);
+    date.setHours(Number(hours), Number(minutes));
+
+    const result = await executeAsync({
+      serviceId: service.id,
+      date,
+    });
+    if (result.serverError || result.validationErrors) {
+      toast.error("Erro ao criar agendamento.");
+      return;
+    }
+    toast.success("Agendamento criado com sucesso.");
+    setSelectedDate(undefined);
+    setSelectedTime(undefined);
+
     if (selectedDate && selectedTime) {
       console.log({
         service: service.name,
@@ -133,9 +158,8 @@ export function BookingSheet({
             {/* Service Summary */}
             {selectedDate && selectedTime && (
               <div className="border-border flex flex-col gap-4 border-t px-4 pt-4">
-
                 <Card className="bg-muted/30 border-border p-4">
-                <h3 className="font-bold text-xm">{service.name}</h3>
+                  <h3 className="text-xm font-bold">{service.name}</h3>
                   <div className="flex flex-col gap-4">
                     <div className="flex items-start justify-between">
                       <div className="flex flex-col gap-1">
@@ -185,7 +209,7 @@ export function BookingSheet({
         <div className="border-muted bg-background border-t border-dashed px-4 py-4">
           <Button
             className="h-12 w-full rounded-full bg-green-900 font-semibold hover:bg-green-800"
-            disabled={!isConfirmEnabled}
+            disabled={!isConfirmEnabled || isPending}
             onClick={handleConfirm}
           >
             Confirmar

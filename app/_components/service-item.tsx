@@ -7,6 +7,7 @@ import { Card } from "./ui/card";
 import Image from "next/image";
 import { BookingSheet } from "./booking-sheet";
 
+
 interface ServiceItemProps {
   service: BarbershopService;
   barbershopName: string;
@@ -19,7 +20,6 @@ export function ServiceItem({ service, barbershopName }: ServiceItemProps) {
     style: "currency",
     currency: "BRL",
   });
-
   return (
     <>
       <Card className="border-border bg-card flex flex-row items-center gap-3 p-3">
