@@ -7,6 +7,7 @@ import { ChevronLeft } from "lucide-react";
 import { Separator } from "@/app/_components/ui/separator";
 import { ServiceItem } from "@/app/_components/service-item";
 import { PhoneItem } from "@/app/_components/phone-item";
+import Footer from "@/app/_components/footer";
 
 const BarbershopPage = async (props: { params: { id: string } }) => {
   const { id } = await props.params;
@@ -106,41 +107,33 @@ const BarbershopPage = async (props: { params: { id: string } }) => {
         </div>
         <div className="flex w-full flex-col gap-3">
           {barbershop.services.map((service) => (
-            <ServiceItem key={service.id} service={service} />
+            <ServiceItem
+              key={service.id}
+              service={service}
+              barbershopName={barbershop.name}
+            />
           ))}
         </div>
-          </div>
-          
-          <div className="px-0 py-6">
-              <Separator />
-          </div>
+      </div>
 
-          {/* Contato */}
-          {/* Contato */}
-        <div className="flex w-full flex-col items-start gap-3 px-5 py-0">
-          <div className="flex items-center justify-center gap-2.5">
-            <p className="text-foreground text-xs font-bold uppercase">
-              CONTATO
-            </p>
-          </div>
-          <div className="flex w-full flex-col gap-3">
-            {barbershop.phones.map((phone, index) => (
-              <PhoneItem key={index} phone={phone} />
-            ))}
-          </div>
+      <div className="px-0 py-6">
+        <Separator />
+      </div>
+
+      {/* Contato */}
+      <div className="flex w-full flex-col items-start gap-3 px-5 py-0 pb-10">
+        <div className="flex items-center justify-center gap-2.5">
+          <p className="text-foreground text-xs font-bold uppercase">CONTATO</p>
         </div>
+        <div className="flex w-full flex-col gap-3">
+          {barbershop.phones.map((phone, index) => (
+            <PhoneItem key={index} phone={phone} />
+          ))}
+        </div>
+      </div>
 
-        {/* Footer */}
-        <div className="flex w-full flex-col items-center gap-2.5 px-0 pt-[60px] pb-0">
-          <div className="bg-secondary flex w-full flex-col items-start justify-center gap-1.5 px-[30px] py-8 text-xs leading-none">
-            <p className="text-foreground font-semibold">
-              © 2025 Copyright Aparatus
-            </p>
-            <p className="text-muted-foreground font-normal">
-              Todos os direitos reservados.
-            </p>
-          </div>
-        </div>   
+      {/* Footer */}
+      <Footer />
     </>
   );
 };
