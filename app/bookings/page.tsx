@@ -51,7 +51,7 @@ const BookingsPage = async () => {
 
         {confirmedBookings.length === 0 && finalizedBookings.length === 0 && (
           <PageSection>
-            <p className="text-center text-muted-foreground">
+            <p className="text-muted-foreground text-center">
               Você não possui agendamentos
             </p>
           </PageSection>

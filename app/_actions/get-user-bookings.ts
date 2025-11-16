@@ -31,11 +31,11 @@ export const getUserBookings = async () => {
   const now = new Date();
 
   const confirmedBookings = bookings.filter(
-    (booking) => booking.date > now && !booking.cancelled
+    (booking) => booking.date > now && !booking.cancelled,
   );
 
   const finalizedBookings = bookings.filter(
-    (booking) => booking.date <= now || booking.cancelled
+    (booking) => booking.date <= now || booking.cancelled,
   );
 
   return {
