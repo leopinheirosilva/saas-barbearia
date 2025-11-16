@@ -11,6 +11,8 @@ import { ptBR } from "date-fns/locale";
 import { useAction } from "next-safe-action/hooks";
 import { createBooking } from "../_actions/create-booking";
 import { toast } from "sonner";
+import { useQuery } from "@tanstack/react-query";
+import { getDateAvailableTimeSlots } from "../_actions/get-date-available-time-slots";
 
 const calendarStyle = `
   :where(.booking-calendar [data-selected-single=true]) {
@@ -36,12 +38,6 @@ interface BookingSheetProps {
   barbershopName: string;
 }
 
-const TIME_SLOTS = Array.from({ length: 19 }, (_, i) => {
-  const hours = Math.floor(i / 2) + 9;
-  const minutes = (i % 2) * 30;
-  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
-});
-
 export function BookingSheet({
   isOpen,
   onClose,
@@ -53,6 +49,18 @@ export function BookingSheet({
     undefined,
   );
   const { executeAsync, isPending } = useAction(createBooking);
+  const {data: availableTimeSlots} = useQuery({
+    queryKey: ["date-available-time-slots", service.barbeshopId, selectedDate],
+    queryFn: () => getDateAvailableTimeSlots({
+      barbershopId: service.barbeshopId,
+      date: selectedDate!,
+    }),
+    enabled: !!selectedDate,
+  })
+
+  const handleDateSelect = (date: Date | undefined) => {
+    setSelectedDate(date)
+  }
 
   const priceInReaisInteger = Math.floor(service.priceInCents / 100);
   const isConfirmEnabled = selectedDate && selectedTime;
@@ -120,7 +128,7 @@ export function BookingSheet({
                 <Calendar
                   mode="single"
                   selected={selectedDate}
-                  onSelect={setSelectedDate}
+                  onSelect={handleDateSelect}
                   disabled={(date) =>
                     date < new Date(new Date().setHours(0, 0, 0, 0))
                   }
@@ -135,7 +143,7 @@ export function BookingSheet({
                 <h3 className="text-base font-semibold">Horário</h3>
                 <div className="time-slots-scroll -mx-4 overflow-x-auto px-4">
                   <div className="flex gap-2 pb-2">
-                    {TIME_SLOTS.map((time) => (
+                    {availableTimeSlots?.data?.map((time) => (
                       <Button
                         key={time}
                         variant="outline"
