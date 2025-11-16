@@ -17,7 +17,7 @@ import {
   AvatarFallback,
 } from "@/app/_components/ui/avatar";
 import { Separator } from "@/app/_components/ui/separator";
-import { LogOutIcon, HomeIcon, CalendarIcon } from "lucide-react";
+import { LogOutIcon, HomeIcon, CalendarIcon, LogInIcon } from "lucide-react";
 
 interface MenuSheetProps {
   triggerButton?: ReactNode;
@@ -142,13 +142,13 @@ const MenuSheet = ({ triggerButton }: MenuSheetProps) => {
             </SheetHeader>
 
             <div className="flex flex-col gap-4 px-4 py-6">
-              <div className="flex justify-between items-center gap-3">
+              <div className="flex items-center justify-between gap-3">
                 <p className="text-sl font-semibold">Olá. Faça seu login!</p>
                 <Button
                   onClick={handleLogin}
-                  className="bg-green-900 text-white rounded-full p-5"
+                  className="rounded-md bg-green-900 p-4 text-white w-13"
                 >
-                  Login →
+                  <LogInIcon />
                 </Button>
               </div>
 
