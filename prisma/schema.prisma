@@ -22,6 +22,8 @@ model Barbershop {
   imageUrl    String
   phones      String[]
   services    BarbershopService[]
+
+  bookings Booking[]
 }
 
 model BarbershopService {
@@ -29,20 +31,24 @@ model BarbershopService {
   name         String
   description  String
   imageUrl     String
-  barbeshopId String
+  barbeshopId  String
   barbershop   Barbershop @relation(fields: [barbeshopId], references: [id]) // foreign key
   priceInCents Int // price stored in cents to avoid floating point issues
+
+  bookings Booking[]
 }
 
 model Booking {
-  id           String    @id @default(uuid())
+  id           String            @id @default(uuid())
   serviceId    String
+  service      BarbershopService @relation(fields: [serviceId], references: [id])
   barbershopId String
+  barbershop   Barbershop        @relation(fields: [barbershopId], references: [id])
   userId       String
-  user         User      @relation(fields: [userId], references: [id])
-  date         DateTime  @db.Timestamptz
-  cancelled    Boolean?  @default(false) // indicates if the booking was cancelled (optional)
-  cancelledAt  DateTime? @db.Timestamptz // when the booking was cancelled
+  user         User              @relation(fields: [userId], references: [id])
+  date         DateTime          @db.Timestamptz
+  cancelled    Boolean?          @default(false) // indicates if the booking was cancelled (optional)
+  cancelledAt  DateTime?         @db.Timestamptz // when the booking was cancelled
 }
 
 model User {
