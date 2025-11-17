@@ -49,51 +49,51 @@ const BookingsPage = () => {
   };
 
   return (
-    <main>
-      <Header />
-      <PageContainer>
-        {confirmedBookings.length > 0 && (
-          <PageSection>
-            <PageSectionTitle>Confirmados</PageSectionTitle>
-            <div className="flex flex-col gap-3">
-              {confirmedBookings.map((booking) => (
-                <BookingItem
-                  key={booking.id}
-                  booking={booking}
-                  onBookingCancelled={handleBookingCancelled}
-                />
-              ))}
-            </div>
-          </PageSection>
-        )}
-
-        {finalizedBookings.length > 0 && (
-          <PageSection>
-            <PageSectionTitle>Finalizados</PageSectionTitle>
-            <div className="flex flex-col gap-3">
-              {finalizedBookings.map((booking) => (
-                <BookingItem
-                  key={booking.id}
-                  booking={booking}
-                  onBookingCancelled={handleBookingCancelled}
-                />
-              ))}
-            </div>
-          </PageSection>
-        )}
-
-        {confirmedBookings.length === 0 && finalizedBookings.length === 0 && (
-          <PageSection>
-            <p className="text-muted-foreground text-center">
-              Você não possui agendamentos
-            </p>
-          </PageSection>
-        )}
-      </PageContainer>
+    <div>
+      <main>
+        <Header />
         <div>
-          <Footer />
+          <PageContainer>
+            {confirmedBookings.length > 0 && (
+              <PageSection>
+                <PageSectionTitle>Confirmados</PageSectionTitle>
+                <div className="flex flex-col gap-3">
+                  {confirmedBookings.map((booking) => (
+                    <BookingItem
+                      key={booking.id}
+                      booking={booking}
+                      onBookingCancelled={handleBookingCancelled}
+                    />
+                  ))}
+                </div>
+              </PageSection>
+            )}
+            {finalizedBookings.length > 0 && (
+              <PageSection>
+                <PageSectionTitle>Finalizados</PageSectionTitle>
+                <div className="flex flex-col gap-3">
+                  {finalizedBookings.map((booking) => (
+                    <BookingItem
+                      key={booking.id}
+                      booking={booking}
+                      onBookingCancelled={handleBookingCancelled}
+                    />
+                  ))}
+                </div>
+              </PageSection>
+            )}
+            {confirmedBookings.length === 0 && finalizedBookings.length === 0 && (
+              <PageSection>
+                <p className="text-muted-foreground text-center">
+                  Você não possui agendamentos
+                </p>
+              </PageSection>
+            )}
+          </PageContainer>
         </div>
-    </main>
+      </main>
+      <Footer />
+    </div>
   );
 };
 

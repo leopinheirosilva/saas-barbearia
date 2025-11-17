@@ -26,48 +26,46 @@ const Home = async () => {
   });
 
   return (
-    <div>
-      <main>
-        <Header />
-        <PageContainer>
-          {/* Main content area with padding and spacing */}
-          <SearchInput />
-          <Image
-            src={banner}
-            alt="Agende agora!"
-            sizes="100vw"
-            className="h-auto w-full"
-          />
-          <PageSection>
-            {/* Seção Recomendados */}
-            <PageSectionTitle>Recomendados</PageSectionTitle>
-            <PageSectionScroller>
-              {recommendedBarbershops.map(
-                (
-                  barbershop, // Map over barbershops and display their names
-                ) => (
-                  <BarbershopItem key={barbershop.id} barbershop={barbershop} />
-                ),
-              )}
-            </PageSectionScroller>
-          </PageSection>
-          <PageSection>
-            {/* Seção Populares */}
-            <PageSectionTitle>Populares</PageSectionTitle>
-            <PageSectionScroller>
-              {popularBarbershops.map(
-                (
-                  barbershop, // Map over barbershops and display their names
-                ) => (
-                  <BarbershopItem key={barbershop.id} barbershop={barbershop} />
-                ),
-              )}
-            </PageSectionScroller>
-          </PageSection>
-        </PageContainer>
-      </main>
-        <Footer />
-    </div>
+    <main>
+      <Header />
+      <PageContainer>
+        {/* Main content area with padding and spacing */}
+        <SearchInput />
+        <Image
+          src={banner}
+          alt="Agende agora!"
+          sizes="100vw"
+          className="h-auto w-full"
+        />
+        <PageSection>
+          {/* Seção Recomendados */}
+          <PageSectionTitle>Recomendados</PageSectionTitle>
+          <PageSectionScroller>
+            {recommendedBarbershops.map(
+              (
+                barbershop, // Map over barbershops and display their names
+              ) => (
+                <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+              ),
+            )}
+          </PageSectionScroller>
+        </PageSection>
+        <PageSection>
+          {/* Seção Populares */}
+          <PageSectionTitle>Populares</PageSectionTitle>
+          <PageSectionScroller>
+            {popularBarbershops.map(
+              (
+                barbershop, // Map over barbershops and display their names
+              ) => (
+                <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+              ),
+            )}
+          </PageSectionScroller>
+        </PageSection>
+      </PageContainer>
+      <Footer />
+    </main>
   );
 };
 export default Home;
