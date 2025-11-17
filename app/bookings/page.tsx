@@ -90,7 +90,9 @@ const BookingsPage = () => {
           </PageSection>
         )}
       </PageContainer>
-        <Footer />
+        <div>
+          <Footer />
+        </div>
     </main>
   );
 };

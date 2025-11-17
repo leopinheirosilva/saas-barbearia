@@ -19,12 +19,21 @@ interface BookingItemProps {
   onBookingCancelled?: (bookingId: string) => void;
 }
 
+const getStatus = (booking: Pick<Booking, "cancelled" | "date">) => {
+  if (booking.cancelled) {
+    return "CANCELADO";
+  }
+  const date = new Date(booking.date);
+  const now = new Date();
+  return !booking.cancelled && date >= now ? "CONFIRMADO" : "FINALIZADO";
+}
+
 const BookingItem = ({ booking, onBookingCancelled }: BookingItemProps) => {
   const [isCancelSheetOpen, setIsCancelSheetOpen] = useState(false);
 
   const now = new Date();
   const isFutureBooking = booking.date > now && !booking.cancelled;
-  const status = isFutureBooking ? "CONFIRMADO" : "FINALIZADO";
+  const status = getStatus(booking);
   const statusColor = isFutureBooking ? "bg-muted text-green-700 p-2" : "bg-muted text-foreground p-2";
 
   return (

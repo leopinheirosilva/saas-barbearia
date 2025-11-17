@@ -17,6 +17,7 @@ import { Avatar, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 import { PhoneItem } from "./phone-item";
 import { MapPin } from "lucide-react";
+import { Separator } from "@/app/_components/ui/separator";
 
 interface CancelBookingSheetProps {
   isOpen: boolean;
@@ -40,7 +41,9 @@ export function CancelBookingSheet({
   const now = new Date();
   const isFutureBooking = booking.date > now;
   const status = isFutureBooking ? "Confirmado" : "Finalizado";
-  const statusColor = isFutureBooking ? "bg-green-900" : "bg-muted";
+  const statusColor = isFutureBooking
+    ? "bg-green-900"
+    : "bg-muted text-foreground";
 
   const handleCancel = async () => {
     const result = await executeAsync({
@@ -72,7 +75,7 @@ export function CancelBookingSheet({
 
   return (
     <Sheet open={isOpen} onOpenChange={handleSheetOpenChange}>
-      <SheetContent className="flex flex-col p-0">
+      <SheetContent className="flex flex-col">
         <SheetHeader className="border-border border-b p-4">
           <SheetTitle>
             {isConfirming ? "Cancelar Reserva" : "Detalhes da Reserva"}
@@ -81,60 +84,47 @@ export function CancelBookingSheet({
 
         <div className="flex-1 overflow-y-auto">
           {!isConfirming ? (
-            <div className="flex flex-col gap-6 p-4">
-              {/* Status e Informações do Serviço */}
-              <div className="flex flex-col gap-4">
-                <Badge className={statusColor}>{status}</Badge>
-                <div className="flex flex-col gap-2">
-                  <p className="font-bold">{booking.service.name}</p>
-                  <div className="flex items-center gap-2">
-                    <Avatar className="h-6 w-6">
-                      <AvatarImage
-                        src={booking.barbershop.imageUrl}
-                        alt={booking.barbershop.name}
-                      />
-                    </Avatar>
-                    <p className="text-muted-foreground text-sm">
-                      {booking.barbershop.name}
-                    </p>
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-3 p-4 pb-0">
+                {/* Status e Informações do Serviço */}
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-2">
+                      <Avatar className="h-6 w-6">
+                        <AvatarImage
+                          src={booking.barbershop.imageUrl}
+                          alt={booking.barbershop.name}
+                        />
+                      </Avatar>
+                      <p className="text-foreground text-xm font-semibold">
+                        {booking.barbershop.name}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              {/* Resumo do Preço */}
-              <div className="border-border flex flex-col gap-3 border-t pt-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground text-sm">Preço</span>
-                  <span className="text-foreground text-lg font-bold">
-                    R${priceInReaisInteger},00
-                  </span>
-                </div>
-              </div>
-
-              {/* Localização */}
-              <div className="border-border flex flex-col gap-3 border-t pt-4">
-                <h3 className="text-base font-semibold">Localização</h3>
+                {/* Localização */}
                 <div className="relative h-40 w-full overflow-hidden rounded-lg">
+                  <div className="flex items-start gap-2">
+                    <MapPin className="text-muted-foreground h-4 w-4 shrink-0" />
+                    <p className="text-foreground pb-3 text-sm">
+                      {booking.barbershop.address}
+                    </p>
+                  </div>
                   <Image
                     width={400}
                     height={160}
                     src="/map.png"
                     alt="Mapa da barbearia"
-                    className="h-full w-full object-cover"
-                  />
+                    className="h-full w-full rounded-md object-cover"
+                  ></Image>
                 </div>
-                <div className="flex items-start gap-2">
-                  <MapPin className="text-muted-foreground mt-1 h-4 w-4 shrink-0" />
-                  <p className="text-foreground text-sm">
-                    {booking.barbershop.address}
-                  </p>
-                </div>
+                <Badge className={statusColor}>{status}</Badge>
               </div>
 
               {/* Data e Hora */}
-              <div className="border-border flex flex-col gap-3 border-t pt-4">
-                <h3 className="text-base font-semibold">Data e Hora</h3>
+              <div className="p-4">
                 <Card className="bg-muted/30 border-border p-4">
+                  <p className="font-bold">{booking.service.name}</p>
                   <div className="flex items-center justify-between">
                     <div className="flex flex-col gap-1">
                       <p className="text-muted-foreground text-xs">Data</p>
@@ -156,12 +146,24 @@ export function CancelBookingSheet({
                       </p>
                     </div>
                   </div>
+                  {/* Resumo do Preço */}
+                  <div className="border-border flex flex-col gap-3 border-t pt-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground text-sm">
+                        Preço
+                      </span>
+                      <span className="text-foreground text-lg font-bold">
+                        R${priceInReaisInteger},00
+                      </span>
+                    </div>
+                  </div>
                 </Card>
               </div>
+              <Separator />
 
               {/* Telefones */}
-              <div className="border-border flex flex-col gap-3 border-t pt-4">
-                <h3 className="text-base font-semibold">Contato</h3>
+              <div className="p-4">
+                <h3 className="pb-6 text-base font-semibold">Contato</h3>
                 <div className="flex flex-col gap-3">
                   {booking.barbershop.phones.map((phone) => (
                     <PhoneItem key={phone} phone={phone} />
@@ -186,6 +188,8 @@ export function CancelBookingSheet({
                   />
                 </svg>
               </div>
+
+              {/* Tela de cancelamento */}
               <div className="text-center">
                 <p className="text-foreground font-semibold">
                   Cancelar Reserva?
@@ -224,7 +228,8 @@ export function CancelBookingSheet({
         </div>
 
         {/* Footer with buttons */}
-        <div className="border-muted bg-background border-t border-dashed px-4 py-4">
+        <Separator />
+        <div className=" bg-background px-4 py-4">
           {!isConfirming ? (
             <Button
               className="bg-destructive hover:bg-destructive/90 h-12 w-full rounded-full font-semibold"
