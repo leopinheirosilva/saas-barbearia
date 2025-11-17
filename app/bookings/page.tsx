@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Header from "@/app/_components/header";
 import Footer from "@/app/_components/footer";
 import BookingItem from "@/app/_components/booking-item";
@@ -7,9 +10,43 @@ import {
   PageSection,
   PageSectionTitle,
 } from "@/app/_components/ui/page";
+import {
+  Booking,
+  BarbershopService,
+  Barbershop,
+} from "@/app/generated/prisma/client";
 
-const BookingsPage = async () => {
-  const { confirmedBookings, finalizedBookings } = await getUserBookings();
+type BookingWithRelations = Booking & {
+  service: BarbershopService;
+  barbershop: Barbershop;
+};
+
+const BookingsPage = () => {
+  const [confirmedBookings, setConfirmedBookings] = useState<
+    BookingWithRelations[]
+  >([]);
+  const [finalizedBookings, setFinalizedBookings] = useState<
+    BookingWithRelations[]
+  >([]);
+
+  useEffect(() => {
+    const loadBookings = async () => {
+      const data = await getUserBookings();
+      setConfirmedBookings(data.confirmedBookings);
+      setFinalizedBookings(data.finalizedBookings);
+    };
+
+    loadBookings();
+  }, []);
+
+  const handleBookingCancelled = (bookingId: string) => {
+    setConfirmedBookings((prev) =>
+      prev.filter((booking) => booking.id !== bookingId),
+    );
+    setFinalizedBookings((prev) =>
+      prev.filter((booking) => booking.id !== bookingId),
+    );
+  };
 
   return (
     <main>
@@ -22,10 +59,8 @@ const BookingsPage = async () => {
               {confirmedBookings.map((booking) => (
                 <BookingItem
                   key={booking.id}
-                  serviceName={booking.service.name}
-                  barbershopName={booking.barbershop.name}
-                  barbershopImageUrl={booking.barbershop.imageUrl}
-                  date={booking.date}
+                  booking={booking}
+                  onBookingCancelled={handleBookingCancelled}
                 />
               ))}
             </div>
@@ -39,10 +74,8 @@ const BookingsPage = async () => {
               {finalizedBookings.map((booking) => (
                 <BookingItem
                   key={booking.id}
-                  serviceName={booking.service.name}
-                  barbershopName={booking.barbershop.name}
-                  barbershopImageUrl={booking.barbershop.imageUrl}
-                  date={booking.date}
+                  booking={booking}
+                  onBookingCancelled={handleBookingCancelled}
                 />
               ))}
             </div>
@@ -57,7 +90,7 @@ const BookingsPage = async () => {
           </PageSection>
         )}
       </PageContainer>
-      <Footer />
+        <Footer />
     </main>
   );
 };

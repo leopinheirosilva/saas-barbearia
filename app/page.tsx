@@ -2,7 +2,6 @@ import Image from "next/image"; // Next.js Image component
 import Header from "./_components/header"; // Header component import
 import SearchInput from "./_components/search-input"; // SearchInput component import
 import banner from "../public/banner.png"; // Import banner image
-import BookingItem from "./_components/booking-item"; // BookingItem component import
 import { prisma } from "@/lib/prisma"; // Import prisma client data
 import BarbershopItem from "./_components/barbershop-item"; // BarbershopItem component import
 import Footer from "./_components/footer";
@@ -38,16 +37,6 @@ const Home = async () => {
           sizes="100vw"
           className="h-auto w-full"
         />
-        <PageSection>
-          {/* Seção Agendamento */}
-          <PageSectionTitle>Agendamentos</PageSectionTitle>
-          <BookingItem
-            serviceName="Corte de Cabelo"
-            barbershopName="Barbearia do Zé"
-            barbershopImageUrl="https://utfs.io/f/c97a2dc9-cf62-468b-a851-bfd2bdde775f-16p.png"
-            date={new Date("2024-06-15T14:30:00")}
-          />
-        </PageSection>
         <PageSection>
           {/* Seção Recomendados */}
           <PageSectionTitle>Recomendados</PageSectionTitle>

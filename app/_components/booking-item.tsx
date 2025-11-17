@@ -1,49 +1,81 @@
-import { Avatar, AvatarImage } from "./ui/avatar"; // Avatar importado do componente UI
-import { Badge } from "./ui/badge"; // Badge importado do componente UI
-import { Card } from "./ui/card"; // Card importado do componente UI
+"use client";
+
+import { useState } from "react";
+import {
+  Booking,
+  BarbershopService,
+  Barbershop,
+} from "../generated/prisma/client";
+import { Avatar, AvatarImage } from "./ui/avatar";
+import { Badge } from "./ui/badge";
+import { Card } from "./ui/card";
+import { CancelBookingSheet } from "./cancel-booking-sheet"; // Verify the correct path to this file
 
 interface BookingItemProps {
-  serviceName: string;
-  barbershopName: string;
-  barbershopImageUrl: string;
-  date: Date;
+  booking: Booking & {
+    service: BarbershopService;
+    barbershop: Barbershop;
+  };
+  onBookingCancelled?: (bookingId: string) => void;
 }
 
-const BookingItem = ({
-  serviceName,
-  barbershopName,
-  barbershopImageUrl,
-  date,
-}: BookingItemProps) => {
+const BookingItem = ({ booking, onBookingCancelled }: BookingItemProps) => {
+  const [isCancelSheetOpen, setIsCancelSheetOpen] = useState(false);
+
+  const now = new Date();
+  const isFutureBooking = booking.date > now && !booking.cancelled;
+  const status = isFutureBooking ? "CONFIRMADO" : "FINALIZADO";
+  const statusColor = isFutureBooking ? "bg-muted text-green-700 p-2" : "bg-muted text-foreground p-2";
+
   return (
-    <Card className="flex w-full min-w-full flex-row items-center justify-between p-0">
-      {/* ESQUERDA */}
-      <div className="flex flex-1 flex-col gap-4 p-4">
-        <Badge className="bg-green-900">Confirmado</Badge>
-        <div className="flex flex-col gap-2">
-          <p className="font-bold">{serviceName}</p> {/* Nome do serviço */}
-          <div className="flex items-center gap-2">
-            <Avatar className="h-6 w-6">
-              <AvatarImage src={barbershopImageUrl} alt={barbershopName} />
-            </Avatar>
-            <p className="text-muted-foreground text-sm">{barbershopName}</p>
+    <>
+      <Card
+        className="flex w-full min-w-full cursor-pointer flex-row items-center justify-between p-0 transition-opacity hover:opacity-80"
+        onClick={() => setIsCancelSheetOpen(true)}
+      >
+        {/* ESQUERDA */}
+        <div className="flex flex-1 flex-col gap-4 p-4">
+          <Badge className={statusColor}>{status}</Badge>
+          <div className="flex flex-col gap-2">
+            <p className="font-bold">{booking.service.name}</p>
+            <div className="flex items-center gap-2">
+              <Avatar className="h-6 w-6">
+                <AvatarImage
+                  src={booking.barbershop.imageUrl}
+                  alt={booking.barbershop.name}
+                />
+              </Avatar>
+              <p className="text-muted-foreground text-sm">
+                {booking.barbershop.name}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-      {/* DIREITA */}
-      <div className="flex h-full w-30 flex-col items-center justify-center border-l p-6 py-4">
-        <p className="text-xs capitalize font-semibold">
-          {date.toLocaleDateString("pt-BR", { month: "long" })}
-        </p>
-        <p>{date.toLocaleDateString("pt-BR", { day: "2-digit" })}</p>
-        <p className="text-xs capitalize font-semibold">
-          {date.toLocaleTimeString("pt-BR", {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
-        </p>
-      </div>
-    </Card>
+        {/* DIREITA */}
+        <div className="flex h-full w-30 flex-col items-center justify-center border-l p-6 py-4">
+          <p className="text-xs font-semibold capitalize">
+            {booking.date.toLocaleDateString("pt-BR", { month: "long" })}
+          </p>
+          <p>{booking.date.toLocaleDateString("pt-BR", { day: "2-digit" })}</p>
+          <p className="text-xs font-semibold capitalize">
+            {booking.date.toLocaleTimeString("pt-BR", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </p>
+        </div>
+      </Card>
+
+      <CancelBookingSheet
+        isOpen={isCancelSheetOpen}
+        onClose={() => setIsCancelSheetOpen(false)}
+        booking={booking}
+        onBookingCancelled={() => {
+          setIsCancelSheetOpen(false);
+          onBookingCancelled?.(booking.id);
+        }}
+      />
+    </>
   );
 };
 
