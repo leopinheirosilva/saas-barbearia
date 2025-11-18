@@ -18,6 +18,7 @@ import {
 } from "@/app/_components/ui/avatar";
 import { Separator } from "@/app/_components/ui/separator";
 import { LogOutIcon, HomeIcon, CalendarIcon, LogInIcon } from "lucide-react";
+import Link from "next/link";
 
 interface MenuSheetProps {
   triggerButton?: ReactNode;
@@ -110,15 +111,43 @@ const MenuSheet = ({ triggerButton }: MenuSheetProps) => {
                 <p className="text-muted-foreground mb-3 px-4 text-xs font-semibold uppercase">
                   Categorias
                 </p>
-                <div className="flex flex-col gap-2">
-                  {categories.map((category) => (
-                    <button
-                      key={category}
-                      className="hover:bg-secondary cursor-default rounded-lg px-4 py-2 text-left text-sm transition-colors"
-                    >
-                      {category}
-                    </button>
-                  ))}
+                <div className="flex flex-col gap-1">
+                  <Link
+                    href="/barbershops?search=barba"
+                    className="h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
+                  >
+                    <span className="text-sm font-medium">Barba</span>
+                  </Link>
+                  <Link
+                    href="/barbershops?search=cabelo"
+                    className="h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
+                  >
+                    <span className="text-sm font-medium">Cabelo</span>
+                  </Link>
+                  <Link
+                    href="/barbershops?search=acabamento"
+                    className="h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
+                  >
+                    <span className="text-sm font-medium">Acabamento</span>
+                  </Link>
+                  <Link
+                    href="/barbershops?search=sobrancelha"
+                    className="h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
+                  >
+                    <span className="text-sm font-medium">Sobrancelha</span>
+                  </Link>
+                  <Link
+                    href="/barbershops?search=pézinho"
+                    className="h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
+                  >
+                    <span className="text-sm font-medium">Pézinho</span>
+                  </Link>
+                  <Link
+                    href="/barbershops?search=progressiva"
+                    className="h-10 w-full cursor-default justify-start rounded-full px-5 py-3 hover:bg-transparent"
+                  >
+                    <span className="text-sm font-medium">Progressiva</span>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -146,7 +175,7 @@ const MenuSheet = ({ triggerButton }: MenuSheetProps) => {
                 <p className="text-sl font-semibold">Olá. Faça seu login!</p>
                 <Button
                   onClick={handleLogin}
-                  className="rounded-md bg-green-900 p-4 text-white w-13"
+                  className="w-13 rounded-md bg-green-900 p-4 text-white"
                 >
                   <LogInIcon />
                 </Button>

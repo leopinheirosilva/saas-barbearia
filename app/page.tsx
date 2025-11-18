@@ -1,6 +1,7 @@
 import Image from "next/image"; // Next.js Image component
 import Header from "./_components/header"; // Header component import
 import SearchInput from "./_components/search-input"; // SearchInput component import
+import QuickSearchButtons from "./_components/quick-search-buttons"; // QuickSearchButtons component import
 import banner from "../public/banner.png"; // Import banner image
 import { prisma } from "@/lib/prisma"; // Import prisma client data
 import BarbershopItem from "./_components/barbershop-item"; // BarbershopItem component import
@@ -31,6 +32,7 @@ const Home = async () => {
       <PageContainer>
         {/* Main content area with padding and spacing */}
         <SearchInput />
+        <QuickSearchButtons />
         <Image
           src={banner}
           alt="Agende agora!"
