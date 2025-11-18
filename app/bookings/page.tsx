@@ -49,10 +49,9 @@ const BookingsPage = () => {
   };
 
   return (
-    <div>
-      <main>
+      <main className="h-screen min-h-screen flex flex-col">
         <Header />
-        <div>
+
           <PageContainer>
             {confirmedBookings.length > 0 && (
               <PageSection>
@@ -90,10 +89,8 @@ const BookingsPage = () => {
               </PageSection>
             )}
           </PageContainer>
-        </div>
+          <Footer />
       </main>
-      <Footer />
-    </div>
   );
 };
 

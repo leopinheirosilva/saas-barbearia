@@ -1,6 +1,6 @@
 export const PageContainer = ({ children }: { children: React.ReactNode }) => {
   // Page container component
-  return <div className="space-y-6 p-5">{children}</div>;
+  return <div className="space-y-6 p-5 h-full">{children}</div>;
 };
 
 export const PageSectionTitle = ({
