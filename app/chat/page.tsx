@@ -5,7 +5,7 @@ import { DefaultChatTransport } from "ai";
 import { useEffect, useRef } from "react";
 import { ChatMessage } from "./_components/chat-message";
 import { ChatHeader } from "./_components/chat-header";
-import { ChatInput } from "@/app/_components/chat-input";
+import { ChatInput } from "@/app/chat/_components/chat-input";
 
 const WELCOME_MESSAGE = `Olá! Sou o Agenda.ai, seu assistente pessoal.
 
@@ -55,20 +55,21 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex h-screen flex-col">
-      <ChatHeader />
 
-      <div
-        ref={messagesContainerRef}
-        className="flex flex-1 flex-col gap-4 overflow-y-auto px-4 py-4"
-      >
-        {messages.map((message) => (
-          <ChatMessage key={message.id} message={message} />
-        ))}
-        <div ref={messagesEndRef} />
+      <div className="flex h-screen flex-col">
+        <ChatHeader />
+        <div
+          ref={messagesContainerRef}
+          className="flex flex-1 flex-col gap-4 overflow-y-auto px-4 py-4"
+        >
+          {messages.map((message) => (
+            <ChatMessage key={message.id} message={message} />
+          ))}
+          <div ref={messagesEndRef} />
+        </div>
+        <ChatInput onSendMessage={handleSendMessage} />
       </div>
 
-      <ChatInput onSendMessage={handleSendMessage} />
-    </div>
+  
   );
 }

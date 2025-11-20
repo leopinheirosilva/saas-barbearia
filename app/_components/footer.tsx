@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <footer className=" bg-gray-300 p-7">
       <p className="text-muted-foreground text-xs font-semibold text-center">
-        © 2024 Barbearia SaaS.
+        © 2024 Aparatuz Barbearias.
       </p>
       <p className="text-xs text-muted-foreground text-center">Todos os direitos reservados.</p>
     </footer>
@@ -10,3 +10,4 @@ const Footer = () => {
 };
 
 export default Footer;
+ 

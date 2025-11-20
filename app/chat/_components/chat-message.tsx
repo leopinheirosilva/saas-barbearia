@@ -1,19 +1,30 @@
 import { UIMessage } from "ai";
 import { MessageCircleMore } from "lucide-react";
+import { Streamdown } from "streamdown";
 
-export const ChatMessage = ({ message }: { message: UIMessage }) => {
+interface ChatMessageProps {
+  message: UIMessage;
+  isStreaming?: boolean;
+}
+
+export const ChatMessage = ({
+  message,
+}: ChatMessageProps) => {
   const isUserMessage = message.role === "user";
   const isSystemMessage = message.role === "system";
 
+  const content = message.parts
+    .filter((part) => part.type === "text")
+    .map((part) => part.text)
+    .join("");
+
   if (isSystemMessage) {
     return (
-      <div className="flex justify-center py-4">
+      <div className="flex justify-start py-4">
         <div className="border-border text-muted-foreground max-w-xs rounded-lg border px-4 py-2 text-center text-sm">
-          {message.parts.map((part) =>
-            part.type === "text" ? (
-              <span key={part.text}>{part.text}</span>
-            ) : null,
-          )}
+          <p className="text-foreground break-word truncate text-sm leading-[1.4] font-normal whitespace-normal">
+            {content}
+          </p>
         </div>
       </div>
     );
@@ -23,13 +34,9 @@ export const ChatMessage = ({ message }: { message: UIMessage }) => {
     return (
       <div className="flex justify-end">
         <div className="bg-muted max-w-xs rounded-3xl px-4 py-2">
-          {message.parts.map((part) =>
-            part.type === "text" ? (
-              <p key={part.text} className="text-foreground text-sm">
-                {part.text}
-              </p>
-            ) : null,
-          )}
+          <p className="text-foreground truncate text-sm leading-[1.4] font-normal wrap-break-word whitespace-normal">
+            {content}
+          </p>
         </div>
       </div>
     );
@@ -39,17 +46,11 @@ export const ChatMessage = ({ message }: { message: UIMessage }) => {
     <div className="flex gap-3">
       <div className="shrink-0">
         <div className="bg-muted flex h-8 w-8 items-center justify-center rounded-full">
-          <MessageCircleMore size="20"/>
+          <MessageCircleMore size="20" />
         </div>
       </div>
-      <div className="flex-1">
-        {message.parts.map((part) =>
-          part.type === "text" ? (
-            <p key={part.text} className="text-foreground text-sm">
-              {part.text}
-            </p>
-          ) : null,
-        )}
+      <div className="flex-1 max-w-xs">
+        <Streamdown>{content}</Streamdown>
       </div>
     </div>
   );
