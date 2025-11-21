@@ -10,6 +10,16 @@ import {
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogAction,
+  AlertDialogCancel,
+} from "./ui/alert-dialog";
 import { useAction } from "next-safe-action/hooks";
 import { cancelBooking } from "../_actions/cancel-booking";
 import { toast } from "sonner";
@@ -74,16 +84,14 @@ export function CancelBookingSheet({
   const priceInReaisInteger = Math.floor(booking.service.priceInCents / 100);
 
   return (
-    <Sheet open={isOpen} onOpenChange={handleSheetOpenChange}>
-      <SheetContent className="flex flex-col">
-        <SheetHeader className="border-border border-b p-4">
-          <SheetTitle>
-            {isConfirming ? "Cancelar Reserva" : "Detalhes da Reserva"}
-          </SheetTitle>
-        </SheetHeader>
+    <>
+      <Sheet open={isOpen} onOpenChange={handleSheetOpenChange}>
+        <SheetContent className="flex flex-col">
+          <SheetHeader className="border-border border-b p-4">
+            <SheetTitle>Detalhes da Reserva</SheetTitle>
+          </SheetHeader>
 
-        <div className="flex-1 overflow-y-auto">
-          {!isConfirming ? (
+          <div className="flex-1 overflow-y-auto">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-3 p-4 pb-0">
                 {/* Status e Informações do Serviço */}
@@ -171,94 +179,82 @@ export function CancelBookingSheet({
                 </div>
               </div>
             </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center gap-4 p-4 pt-8">
-              <div className="bg-destructive/10 rounded-full p-4">
-                <svg
-                  className="text-destructive h-8 w-8"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 9v2m0 4v2m0 4v2M6.228 6.228a9 9 0 010 12.728m12.728 0a9 9 0 010-12.728M6.228 6.228L4.343 4.343m12.728 12.728l1.885 1.885"
-                  />
-                </svg>
-              </div>
+          </div>
 
-              {/* Tela de cancelamento */}
-              <div className="text-center">
-                <p className="text-foreground font-semibold">
-                  Cancelar Reserva?
-                </p>
-                <p className="text-muted-foreground text-sm">
-                  Tem certeza que deseja cancelar este agendamento?
-                </p>
-              </div>
-              <Card className="bg-muted/30 border-border w-full p-4">
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-center justify-between">
-                    <p className="text-muted-foreground text-sm">Serviço</p>
-                    <p className="text-foreground text-sm font-semibold">
-                      {booking.service.name}
-                    </p>
-                  </div>
-                  <div className="border-muted flex items-center justify-between border-t pt-3">
-                    <p className="text-muted-foreground text-sm">Data</p>
-                    <p className="text-foreground text-sm font-semibold">
-                      {booking.date.toLocaleDateString("pt-BR")}
-                    </p>
-                  </div>
-                  <div className="border-muted flex items-center justify-between border-t pt-3">
-                    <p className="text-muted-foreground text-sm">Horário</p>
-                    <p className="text-foreground text-sm font-semibold">
-                      {booking.date.toLocaleTimeString("pt-BR", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            </div>
-          )}
-        </div>
-
-        {/* Footer with buttons */}
-        <Separator />
-        <div className=" bg-background px-4 py-4">
-          {!isConfirming ? (
+          {/* Footer with buttons */}
+          <Separator />
+          <div className="flex items-center gap-3 bg-background px-4 py-4">
             <Button
-              className="bg-destructive hover:bg-destructive/90 h-12 w-full rounded-full font-semibold"
+              className=" h-12 w-full rounded-full font-semibold shrink"
+              variant="outline"
+              onClick={onClose}
+            >
+              Voltar
+            </Button>
+            <Button
+              className="bg-destructive hover:bg-destructive/90 h-12 w-full rounded-full font-semibold shrink"
               onClick={() => setIsConfirming(true)}
               disabled={!isFutureBooking}
             >
               Cancelar Reserva
             </Button>
-          ) : (
-            <div className="flex gap-3">
-              <Button
-                variant="outline"
-                className="h-12 flex-1 rounded-full"
-                onClick={() => setIsConfirming(false)}
-                disabled={isPending}
-              >
-                Voltar
-              </Button>
-              <Button
-                className="bg-destructive hover:bg-destructive/90 h-12 flex-1 rounded-full font-semibold"
-                onClick={handleCancel}
-                disabled={isPending}
-              >
-                {isPending ? "Cancelando..." : "Confirmar"}
-              </Button>
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      <AlertDialog open={isConfirming} onOpenChange={setIsConfirming}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Cancelar Reserva</AlertDialogTitle>
+            <AlertDialogDescription>
+              Tem certeza que deseja cancelar este agendamento?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <Card className="bg-muted/30 border-border p-4">
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-between">
+                <p className="text-muted-foreground text-sm">Barbearia</p>
+                <p className="text-foreground text-sm font-semibold">
+                  {booking.barbershop.name}
+                </p>
+              </div>
+              <div className="border-muted flex items-center justify-between border-t pt-3">
+                <p className="text-muted-foreground text-sm">Serviço</p>
+                <p className="text-foreground text-sm font-semibold">
+                  {booking.service.name}
+                </p>
+              </div>
+              <div className="border-muted flex items-center justify-between border-t pt-3">
+                <p className="text-muted-foreground text-sm">Data</p>
+                <p className="text-foreground text-sm font-semibold">
+                  {booking.date.toLocaleDateString("pt-BR")}
+                </p>
+              </div>
+              <div className="border-muted flex items-center justify-between border-t pt-3">
+                <p className="text-muted-foreground text-sm">Horário</p>
+                <p className="text-foreground text-sm font-semibold">
+                  {booking.date.toLocaleTimeString("pt-BR", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </p>
+              </div>
             </div>
-          )}
-        </div>
-      </SheetContent>
-    </Sheet>
+          </Card>
+
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isPending}>Voltar</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-destructive hover:bg-destructive/90"
+              onClick={handleCancel}
+              disabled={isPending}
+            >
+              {isPending ? "Cancelando..." : "Confirmar"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }
