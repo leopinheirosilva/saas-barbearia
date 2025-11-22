@@ -10,5 +10,5 @@ export const auth = betterAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
         }
     },
-    trustedOrigins: ["http://localhost:3000"]
+    trustedOrigins: ["http://localhost:3000","https://saas-barbearia-n8rt.vercel.app"]
 });
