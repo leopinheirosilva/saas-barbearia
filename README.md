@@ -1,4 +1,4 @@
-#saas-barberia
+# saas-barberia
 
 saas para agendamento em barbearias, utilizando a interface mobile-first.
 
