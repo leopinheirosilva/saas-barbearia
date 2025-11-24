@@ -1,5 +1,6 @@
 "use client";
 
+// Imports
 import { useState } from "react";
 import Image from "next/image";
 import {
@@ -30,6 +31,7 @@ import { MapPin } from "lucide-react";
 import { Separator } from "@/app/_components/ui/separator";
 
 interface CancelBookingSheetProps {
+  // Recebe as props necessárias
   isOpen: boolean;
   onClose: () => void;
   booking: Booking & {
@@ -40,8 +42,8 @@ interface CancelBookingSheetProps {
 }
 
 export function CancelBookingSheet({
-  isOpen,
-  onClose,
+  isOpen, // Controla se o sheet está aberto
+  onClose, // Função para fechar o sheet
   booking,
   onBookingCancelled,
 }: CancelBookingSheetProps) {
@@ -49,18 +51,23 @@ export function CancelBookingSheet({
   const { executeAsync, isPending } = useAction(cancelBooking);
 
   const now = new Date();
+  // Verifica se o agendamento é futuro
   const isFutureBooking = booking.date > now;
   const status = isFutureBooking ? "Confirmado" : "Finalizado";
+  // Define os estilos dos status confirmado e finalizado
   const statusColor = isFutureBooking
     ? "bg-green-900"
     : "bg-muted text-foreground";
 
   const handleCancel = async () => {
+    // Função para lidar com o cancelamento
     const result = await executeAsync({
+      // Chama a ação de cancelar agendamento
       bookingId: booking.id,
     });
 
     if (result.serverError || result.validationErrors) {
+      // Verifica se houve erro
       const errorMessage =
         result.validationErrors?._errors?.[0] ||
         "Erro ao cancelar agendamento.";
@@ -68,23 +75,24 @@ export function CancelBookingSheet({
       return;
     }
 
-    toast.success("Agendamento cancelado com sucesso.");
+    toast.success("Agendamento cancelado com sucesso."); // Notifica sucesso
     setIsConfirming(false);
     onBookingCancelled?.();
     onClose();
   };
 
   const handleSheetOpenChange = (open: boolean) => {
+    // Função para lidar com a mudança de estado do sheet
     if (!open) {
       setIsConfirming(false);
     }
     onClose();
   };
 
-  const priceInReaisInteger = Math.floor(booking.service.priceInCents / 100);
+  const priceInReaisInteger = Math.floor(booking.service.priceInCents / 100); // Calcula o preço em reais
 
   return (
-    <>
+    <main>
       <Sheet open={isOpen} onOpenChange={handleSheetOpenChange}>
         <SheetContent className="flex flex-col">
           <SheetHeader className="border-border border-b p-4">
@@ -94,7 +102,7 @@ export function CancelBookingSheet({
           <div className="flex-1 overflow-y-auto">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-3 p-4 pb-0">
-                {/* Status e Informações do Serviço */}
+                {/* Informações da barbearia */}
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center gap-2">
@@ -110,7 +118,7 @@ export function CancelBookingSheet({
                     </div>
                   </div>
                 </div>
-                {/* Localização */}
+                {/* Localização e Mapa */}
                 <div className="relative h-40 w-full overflow-hidden rounded-lg">
                   <div className="flex items-start gap-2">
                     <MapPin className="text-muted-foreground h-4 w-4 shrink-0" />
@@ -125,11 +133,12 @@ export function CancelBookingSheet({
                     alt="Mapa da barbearia"
                     className="h-full w-full rounded-md object-cover"
                   ></Image>
-                </div>
+                </div>{" "}
+                {/* Status do agendamento */}
                 <Badge className={statusColor}>{status}</Badge>
               </div>
 
-              {/* Data e Hora */}
+              {/* Informações do agendamento */}
               <div className="p-4">
                 <Card className="bg-muted/30 border-border p-4">
                   <p className="font-bold">{booking.service.name}</p>
@@ -154,7 +163,6 @@ export function CancelBookingSheet({
                       </p>
                     </div>
                   </div>
-                  {/* Resumo do Preço */}
                   <div className="border-border flex flex-col gap-3 border-t pt-4">
                     <div className="flex items-center justify-between">
                       <span className="text-muted-foreground text-sm">
@@ -167,6 +175,7 @@ export function CancelBookingSheet({
                   </div>
                 </Card>
               </div>
+
               <Separator />
 
               {/* Telefones */}
@@ -180,19 +189,19 @@ export function CancelBookingSheet({
               </div>
             </div>
           </div>
-
-          {/* Footer with buttons */}
           <Separator />
-          <div className="flex items-center gap-3 bg-background px-4 py-4">
+
+          {/* Botões voltar e cancelar reserva */}
+          <div className="bg-background flex items-center gap-3 px-4 py-4">
             <Button
-              className=" h-12 w-full rounded-full font-semibold shrink"
+              className="h-12 w-full shrink rounded-full font-semibold"
               variant="outline"
               onClick={onClose}
             >
               Voltar
             </Button>
             <Button
-              className="bg-destructive hover:bg-destructive/90 h-12 w-full rounded-full font-semibold shrink"
+              className="bg-destructive hover:bg-destructive/90 h-12 w-full shrink rounded-full font-semibold"
               onClick={() => setIsConfirming(true)}
               disabled={!isFutureBooking}
             >
@@ -202,6 +211,7 @@ export function CancelBookingSheet({
         </SheetContent>
       </Sheet>
 
+      {/* Caixa de alerta para confirmar o cancelamento da reserva */}
       <AlertDialog open={isConfirming} onOpenChange={setIsConfirming}>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -211,6 +221,7 @@ export function CancelBookingSheet({
             </AlertDialogDescription>
           </AlertDialogHeader>
 
+          {/* Detalhes do agendamento a ser cancelado */}
           <Card className="bg-muted/30 border-border p-4">
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between">
@@ -255,6 +266,6 @@ export function CancelBookingSheet({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </>
+    </main>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+// Imports
 import { ReactNode, useState } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
@@ -25,21 +26,25 @@ interface MenuSheetProps {
 }
 
 const MenuSheet = ({ triggerButton }: MenuSheetProps) => {
-  const [open, setOpen] = useState(false);
-  const { data: session } = authClient.useSession();
-  const router = useRouter();
+  // Componente MenuSheet
+  const [open, setOpen] = useState(false); // Estado para controlar a abertura do sheet
+  const { data: session } = authClient.useSession(); // Hook para obter a sessão do usuário
+  const router = useRouter(); // Hook para navegação entre páginas
 
   const handleLogout = async () => {
+    // Função para logout
     await authClient.signOut();
     setOpen(false);
   };
 
   const handleNavigation = (path: string) => {
+    // Função para navegação
     router.push(path);
     setOpen(false);
   };
 
   const handleLogin = async () => {
+    // Função para login
     await authClient.signIn.social({
       provider: "google",
     });
@@ -47,6 +52,7 @@ const MenuSheet = ({ triggerButton }: MenuSheetProps) => {
   };
 
   const categories = [
+    // Categorias do menu
     "Cabelo",
     "Barba",
     "Acabamento",
@@ -57,11 +63,12 @@ const MenuSheet = ({ triggerButton }: MenuSheetProps) => {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
+      {/* Botão que dispara o sheet */}
       {triggerButton && <SheetTrigger asChild>{triggerButton}</SheetTrigger>}
       <SheetContent side="right" className="w-full max-w-sm p-0">
-        {session ? (
-          // Usuário Logado
-          <>
+        {session ? ( // Usuário Logado
+          <main>
+            {/* Informações de login */}
             <SheetHeader className="border-b">
               <div className="flex items-center gap-4">
                 <Avatar className="size-16">
@@ -106,7 +113,7 @@ const MenuSheet = ({ triggerButton }: MenuSheetProps) => {
 
               <Separator />
 
-              {/* Categories */}
+              {/* Categorias */}
               <div>
                 <p className="text-muted-foreground mb-3 px-4 text-xs font-semibold uppercase">
                   Categorias
@@ -162,10 +169,10 @@ const MenuSheet = ({ triggerButton }: MenuSheetProps) => {
                 Sair da conta
               </Button>
             </SheetFooter>
-          </>
+          </main>
         ) : (
           // Usuário Deslogado
-          <>
+          <main>
             <SheetHeader className="border-b">
               <h2 className="text-lg font-semibold">Menu</h2>
             </SheetHeader>
@@ -181,7 +188,7 @@ const MenuSheet = ({ triggerButton }: MenuSheetProps) => {
                 </Button>
               </div>
 
-              {/* Navigation Items (disabled) */}
+              {/* Menu Itens (disabled) */}
               <div className="flex flex-col gap-3">
                 <button
                   disabled
@@ -202,7 +209,7 @@ const MenuSheet = ({ triggerButton }: MenuSheetProps) => {
 
               <Separator />
 
-              {/* Categories */}
+              {/* Categorias */}
               <div>
                 <p className="text-muted-foreground mb-3 px-4 text-xs font-semibold uppercase">
                   Categorias
@@ -230,7 +237,7 @@ const MenuSheet = ({ triggerButton }: MenuSheetProps) => {
                 Sair da conta
               </button>
             </SheetFooter>
-          </>
+          </main>
         )}
       </SheetContent>
     </Sheet>

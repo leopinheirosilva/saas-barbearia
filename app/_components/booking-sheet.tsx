@@ -1,5 +1,6 @@
 "use client";
 
+// Imports
 import { useState } from "react";
 import { BarbershopService } from "../generated/prisma/client";
 import { Button } from "./ui/button";
@@ -14,6 +15,7 @@ import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
 import { getDateAvailableTimeSlots } from "../_actions/get-date-available-time-slots";
 
+// Estilo do calendário
 const calendarStyle = `
   :where(.booking-calendar [data-selected-single=true]) {
     background-color: rgb(20, 83, 45) !important;
@@ -32,6 +34,7 @@ const calendarStyle = `
 `;
 
 interface BookingSheetProps {
+  // Recebe as props necessárias
   isOpen: boolean;
   onClose: () => void;
   service: BarbershopService;
@@ -39,43 +42,53 @@ interface BookingSheetProps {
 }
 
 export function BookingSheet({
-  isOpen,
-  onClose,
+  // Componente BookingSheet
+  isOpen, // Controla se o sheet está aberto
+  onClose, // Função para fechar o sheet
   service,
   barbershopName,
 }: BookingSheetProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  // Estado para a data selecionada
   const [selectedTime, setSelectedTime] = useState<string | undefined>(
+    // Estado para o horário selecionado
     undefined,
   );
   const { executeAsync, isPending } = useAction(createBooking);
-  const {data: availableTimeSlots} = useQuery({
+  // Hook para executar a ação de criar agendamento
+  const { data: availableTimeSlots } = useQuery({
+    // Hook para buscar os horários disponíveis
     queryKey: ["date-available-time-slots", service.barbeshopId, selectedDate],
-    queryFn: () => getDateAvailableTimeSlots({
-      barbershopId: service.barbeshopId,
-      date: selectedDate!,
-    }),
-    enabled: !!selectedDate,
-  })
+    queryFn: () =>
+      getDateAvailableTimeSlots({
+        barbershopId: service.barbeshopId,
+        date: selectedDate!,
+      }),
+    enabled: !!selectedDate, // Só executa a query se uma data estiver selecionada
+  });
 
   const handleDateSelect = (date: Date | undefined) => {
-    setSelectedDate(date)
-  }
+    // Função para lidar com a seleção de data
+    setSelectedDate(date);
+  };
 
   const priceInReaisInteger = Math.floor(service.priceInCents / 100);
-  const isConfirmEnabled = selectedDate && selectedTime;
+  const isConfirmEnabled = selectedDate && selectedTime; // Verifica se a confirmação está habilitada
 
   const handleConfirm = async () => {
+    // Função para lidar com a confirmação do agendamento
     if (!selectedTime || !selectedDate) {
+      // Verifica se a data e o horário estão selecionados
       return;
     }
-    const timeSplitted = selectedTime?.split(":");
+    const timeSplitted = selectedTime?.split(":"); // Divide o horário em horas e minutos
     const hours = timeSplitted[0];
     const minutes = timeSplitted[1];
     const date = new Date(selectedDate);
     date.setHours(Number(hours), Number(minutes));
 
     const result = await executeAsync({
+      // Executa a ação de criar agendamento
       serviceId: service.id,
       date,
     });
@@ -88,6 +101,7 @@ export function BookingSheet({
     setSelectedTime(undefined);
 
     if (selectedDate && selectedTime) {
+      // Loga os detalhes do agendamento: nome do serviço, preço, data, horário e nome da barbearia
       console.log({
         service: service.name,
         price: priceInReaisInteger,
@@ -95,23 +109,26 @@ export function BookingSheet({
         time: selectedTime,
         barbershop: barbershopName,
       });
-      onClose();
-      setSelectedDate(undefined);
-      setSelectedTime(undefined);
+      onClose(); // Fecha o sheet após a confirmação
+      setSelectedDate(undefined); // Reseta a data selecionada
+      setSelectedTime(undefined); // Reseta o horário selecionado
     }
   };
 
   const handleSheetOpenChange = (open: boolean) => {
+    // Função para lidar com a mudança de estado do sheet
     if (!open) {
+      // Se o sheet for fechado
       setSelectedDate(undefined);
       setSelectedTime(undefined);
     }
-    onClose();
+    onClose(); // Chama a função de fechar o sheet
   };
 
   return (
     <Sheet open={isOpen} onOpenChange={handleSheetOpenChange}>
-      <style>{calendarStyle}</style>
+      <style>{calendarStyle}</style>{" "}
+      {/* Estilo customizado para o calendário */}
       <SheetContent className="flex flex-col p-0">
         <SheetHeader className="border-border border-b p-4">
           <SheetTitle>Fazer Reserva</SheetTitle>
@@ -119,7 +136,7 @@ export function BookingSheet({
 
         <div className="flex-1 overflow-y-auto pt-6 pb-20">
           <div className="flex flex-col gap-6">
-            {/* Calendar */}
+            {/* Calendário */}
             <div className="flex flex-col gap-4 px-4">
               <h3 className="text-base font-semibold">
                 {format(new Date(), "MMMM", { locale: ptBR })}
@@ -163,7 +180,7 @@ export function BookingSheet({
               </div>
             )}
 
-            {/* Service Summary */}
+            {/* Resumo dos serviços */}
             {selectedDate && selectedTime && (
               <div className="border-border flex flex-col gap-4 border-t px-4 pt-4">
                 <Card className="bg-muted/30 border-border p-4">
@@ -213,7 +230,7 @@ export function BookingSheet({
           </div>
         </div>
 
-        {/* Footer with button */}
+        {/* Botão confirmar */}
         <div className="border-muted bg-background border-t border-dashed px-4 py-4">
           <Button
             className="h-12 w-full rounded-full bg-green-900 font-semibold hover:bg-green-800"

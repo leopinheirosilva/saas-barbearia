@@ -10,6 +10,7 @@ interface PhoneItemProps {
 
 export function PhoneItem({ phone }: PhoneItemProps) {
   const handleCopyPhone = () => {
+    // Função para copiar o telefone para a área de transferência
     navigator.clipboard.writeText(phone);
     toast.success("Telefone copiado!");
   };

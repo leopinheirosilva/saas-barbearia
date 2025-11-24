@@ -1,5 +1,6 @@
 "use client";
 
+// Imports
 import { useState } from "react";
 import { BarbershopService } from "../generated/prisma/client";
 import { Button } from "./ui/button";
@@ -9,19 +10,22 @@ import { BookingSheet } from "./booking-sheet";
 
 
 interface ServiceItemProps {
+  // Recebe as props necessárias
   service: BarbershopService;
   barbershopName: string;
 }
 
 export function ServiceItem({ service, barbershopName }: ServiceItemProps) {
-  const [isBookingSheetOpen, setIsBookingSheetOpen] = useState(false);
-
+  // Estado para controlar a abertura do BookingSheet
+  const [isBookingSheetOpen, setIsBookingSheetOpen] = useState(false); 
   const priceInReais = (service.priceInCents / 100).toLocaleString("pt-BR", {
+  // Formata o preço para reais
     style: "currency",
     currency: "BRL",
   });
   return (
-    <>
+    <main>
+      {/* Card com informações do serviço */}
       <Card className="border-border bg-card flex flex-row items-center gap-3 p-3">
         <div className="relative size-[100px] shrink-0 overflow-hidden rounded-md">
           <Image
@@ -56,12 +60,13 @@ export function ServiceItem({ service, barbershopName }: ServiceItemProps) {
         </div>
       </Card>
 
+      {/* Chama o componente BookingSheet ao clicar no botão reservar */}
       <BookingSheet
         isOpen={isBookingSheetOpen}
         onClose={() => setIsBookingSheetOpen(false)}
         service={service}
         barbershopName={barbershopName}
       />
-    </>
+    </main>
   );
 }

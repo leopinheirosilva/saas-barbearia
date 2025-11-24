@@ -4,6 +4,7 @@ const prisma = new PrismaClient();
 
 async function seedDatabase() {
   try {
+    // Imagens para as barbearias
     const images = [
       "https://utfs.io/f/c97a2dc9-cf62-468b-a851-bfd2bdde775f-16p.png",
       "https://utfs.io/f/45331760-899c-4b4b-910e-e00babb6ed81-16q.png",
@@ -27,7 +28,7 @@ async function seedDatabase() {
       "https://utfs.io/f/07842cfb-7b30-4fdc-accc-719618dfa1f2-17s.png",
       "https://utfs.io/f/0522fdaf-0357-4213-8f52-1d83c3dcb6cd-18e.png",
     ];
-    // Nomes criativos para as barbearias
+    // Nomes para as barbearias
     const creativeNames = [
       "Barbearia Vintage",
       "Corte & Estilo",
@@ -55,6 +56,7 @@ async function seedDatabase() {
       "Avenida Clássica, 707",
     ];
 
+    // Serviços para as barbearias
     const services = [
       {
         name: "Corte de Cabelo",

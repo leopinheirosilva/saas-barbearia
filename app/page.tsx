@@ -1,10 +1,11 @@
-import Image from "next/image"; // Next.js Image component
-import Header from "./_components/header"; // Header component import
-import SearchInput from "./_components/search-input"; // SearchInput component import
-import QuickSearchButtons from "./_components/quick-search-buttons"; // QuickSearchButtons component import
-import banner from "../public/banner.png"; // Import banner image
-import { prisma } from "@/lib/prisma"; // Import prisma client data
-import BarbershopItem from "./_components/barbershop-item"; // BarbershopItem component import
+// Imports
+import Image from "next/image";
+import Header from "./_components/header";
+import SearchInput from "./_components/search-input";
+import QuickSearchButtons from "./_components/quick-search-buttons";
+import banner from "../public/banner.png";
+import { prisma } from "@/lib/prisma";
+import BarbershopItem from "./_components/barbershop-item";
 import Footer from "./_components/footer";
 import {
   PageContainer,
@@ -14,13 +15,14 @@ import {
 } from "./_components/ui/page";
 
 const Home = async () => {
-  // Home page component
   const recommendedBarbershops = await prisma.barbershop.findMany({
+    // Lista as barbearias por ordem ascendente
     orderBy: {
       name: "asc",
     },
   });
   const popularBarbershops = await prisma.barbershop.findMany({
+    // Lista as barbearias por ordem descendente
     orderBy: {
       name: "desc",
     },
@@ -30,7 +32,7 @@ const Home = async () => {
     <main>
       <Header />
       <PageContainer>
-        {/* Main content area with padding and spacing */}
+        {/* Homepage */}
         <SearchInput />
         <QuickSearchButtons />
         <Image
@@ -39,30 +41,24 @@ const Home = async () => {
           sizes="100vw"
           className="h-auto w-full"
         />
+
         <PageSection>
           {/* Seção Recomendados */}
           <PageSectionTitle>Recomendados</PageSectionTitle>
           <PageSectionScroller>
-            {recommendedBarbershops.map(
-              (
-                barbershop, // Map over barbershops and display their names
-              ) => (
-                <BarbershopItem key={barbershop.id} barbershop={barbershop} />
-              ),
-            )}
+            {recommendedBarbershops.map((barbershop) => (
+              <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+            ))}
           </PageSectionScroller>
         </PageSection>
+
         <PageSection>
           {/* Seção Populares */}
           <PageSectionTitle>Populares</PageSectionTitle>
           <PageSectionScroller>
-            {popularBarbershops.map(
-              (
-                barbershop, // Map over barbershops and display their names
-              ) => (
-                <BarbershopItem key={barbershop.id} barbershop={barbershop} />
-              ),
-            )}
+            {popularBarbershops.map((barbershop) => (
+              <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+            ))}
           </PageSectionScroller>
         </PageSection>
       </PageContainer>

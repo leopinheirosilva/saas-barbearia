@@ -48,8 +48,8 @@ model Booking {
   userId       String
   user         User              @relation(fields: [userId], references: [id])
   date         DateTime          @db.Timestamptz
-  cancelled    Boolean?          @default(false) // indicates if the booking was cancelled (optional)
-  cancelledAt  DateTime?         @db.Timestamptz // when the booking was cancelled
+  cancelled    Boolean?          @default(false)
+  cancelledAt  DateTime?         @db.Timestamptz
 }
 
 model User {
