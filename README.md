@@ -1,6 +1,6 @@
 # saas-barberia
 
 saas para agendamento em barbearias, utilizando tecnologias como: Next.js, React, Typescript, Tailwind CSS e Prisma.
-Esse saas foi desenvolvido pensando em uma interface mobile.
+Esse saas foi desenvolvido pensando em uma interface mobile first.
 
-Clique <a href="https://saas-barbearia-n8rt.vercel.app/">aqui</a> para acessar o site!
+Clique [aqui]("https://saas-barbearia-n8rt.vercel.app/") para acessar o site!
