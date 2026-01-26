@@ -1,6 +1,18 @@
 # saas-barberia
 
-saas para agendamento em barbearias, utilizando tecnologias como: Next.js, React, Typescript, Tailwind CSS e Prisma.
-Esse saas foi desenvolvido pensando em uma interface mobile first.
+O SaaS Barbearia é uma aplicação para gestão de agendamentos e clientes para barbearias. Feito para pequenas barbearias que precisam digitalizar agendamentos e melhorar a experiência do cliente.
+
+##Principais features
+
+- Agendamento online com controle de horários
+- Cadastro e histórico de clientes
+- Autenticação com OAuth
+
+##Tech stack
+
+- Front-end: React / Next.js
+- Back-end: Node.js
+- Banco: PostgreSQL
+- Deploy: Vercel
 
 Clique [aqui]("https://saas-barbearia-n8rt.vercel.app/") para acessar o site!
