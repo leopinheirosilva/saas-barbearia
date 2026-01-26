@@ -20,4 +20,4 @@ O SaaS Barbearia é uma aplicação para gestão de agendamentos e clientes para
 - Banco: PostgreSQL
 - Deploy: Vercel
 
-Clique [aqui]("https://saas-barbearia-n8rt.vercel.app/") para acessar o site!
+Clique [aqui]("https://saas-barbearia-n8rt.vercel.app/") para acessar a aplicação.
