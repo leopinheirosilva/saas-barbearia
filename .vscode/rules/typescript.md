@@ -3,12 +3,7 @@ globs: *.ts,*.tsx
 alwaysApply: false
 ---
 
----
-
-globs: _.ts,_.tsx
-alwaysApply: false
-
----
+# Regras
 
 - Escreva um código limpo, conciso e fácil de manter, seguindo princípios do SOLID e Clean Code.
 - Use nomes de variáveis descritivos (exemplos: isLoading, hasError).
