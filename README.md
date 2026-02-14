@@ -41,7 +41,7 @@ cd saas-barbearia
 
 - Vercel
 
-clique [aqui](https://saas-barbearia-n8rt.vercel.app/) para acessar o site!
+clique [aqui](https://saas-barbearia-n8rt.vercel.app/) para acessar a aplicação!
 
 ## Contato
 
