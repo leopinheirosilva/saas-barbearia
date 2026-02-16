@@ -2,8 +2,6 @@
 
 O SaaS Barbearia é uma aplicação para gestão de agendamentos e clientes para barbearias. Feito para pequenas barbearias que precisam digitalizar agendamentos e melhorar a experiência do cliente.
 
-![Screenshots do SaaS Barbearia](public/demo.png)
-
 ## Principais features
 
 - Agendamento online com controle de horários
@@ -11,6 +9,8 @@ O SaaS Barbearia é uma aplicação para gestão de agendamentos e clientes para
 - Autenticação com OAuth
 - Chat para atendimento com IA
 - Mobile First
+
+![Screenshots do SaaS Barbearia](public/demo.png)
 
 ## Tech stack
 
