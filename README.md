@@ -31,11 +31,15 @@ cd saas-barbearia
 
 - Instale as dependências:
 
-`npm install`
+```code
+npm install
+```
 
 - Rode a aplicação:
 
-`npm run dev`
+```code
+npm run dev
+```
 
 ## Deploy
 
