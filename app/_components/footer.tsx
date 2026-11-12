@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className=" bg-gray-300 p-7">
+    <footer className=" bg-muted p-7">
       <p className="text-muted-foreground text-xs font-semibold text-center">
         © 2024 Aparatuz Barbearias.
       </p>

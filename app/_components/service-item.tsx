@@ -27,7 +27,7 @@ export function ServiceItem({ service, barbershopName }: ServiceItemProps) {
     <main>
       {/* Card com informações do serviço */}
       <Card className="border-border bg-card flex flex-row items-center gap-3 p-3">
-        <div className="relative size-[100px] shrink-0 overflow-hidden rounded-md">
+        <div className="relative size-25 shrink-0 overflow-hidden rounded-md">
           <Image
             src={service.imageUrl}
             alt={service.name}

@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "./_components/ui/sonner";
 import QueryProvider from "./_providers/query-providers";
+import { ThemeProvider } from "next-themes";
 
 // Fonte sans-serif Geist Sans
 const geistSans = Geist({
@@ -19,8 +20,11 @@ const geistMono = Geist_Mono({
 
 // Título e descrição da aplicação
 export const metadata: Metadata = {
-  title: "Aparatuz",
+  title: "Aparatus",
   description: "saas para agendamento de barbearias",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
@@ -33,10 +37,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <QueryProvider>
-          {children}
-          <Toaster />
-        </QueryProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <QueryProvider>
+            {children}
+            <Toaster />
+          </QueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
