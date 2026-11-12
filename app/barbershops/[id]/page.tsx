@@ -30,7 +30,7 @@ const BarbershopPage = async (props: { params: { id: string } }) => {
   return (
     <main>
       <div className="flex size-full flex-col items-start overflow-clip">
-        <div className="relative h-[297px] w-full">
+        <div className="relative h-74.25 w-full">
           {/* Imagem da Barbearia */}
           <div className="absolute top-0 left-0 h-full w-full">
             <Image
@@ -42,7 +42,7 @@ const BarbershopPage = async (props: { params: { id: string } }) => {
           </div>
 
           {/* Botão Voltar */}
-          <div className="absolute top-0 left-0 flex w-full items-baseline gap-[91px] p-3">
+          <div className="absolute top-0 left-0 flex w-full items-baseline gap-22.75 p-3">
             <Button
               size="icon"
               variant="secondary"
@@ -60,7 +60,7 @@ const BarbershopPage = async (props: { params: { id: string } }) => {
         <div className="flex w-full items-center gap-1.5 px-5 pt-6 pb-0">
           <div className="flex flex-col items-start gap-1">
             <div className="flex items-start gap-1.5">
-              <div className="relative size-[30px] shrink-0 overflow-hidden rounded-full">
+              <div className="relative size-7.5 shrink-0 overflow-hidden rounded-full">
                 <Image
                   src={barbershop.imageUrl}
                   alt={barbershop.name}
