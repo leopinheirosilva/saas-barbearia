@@ -11,7 +11,7 @@ Plataforma moderna de gestão e agendamento de serviços em barbearias, com supo
 - **Linguagem:** TypeScript
 - **Banco de Dados & ORM:** PostgreSQL com Prisma ORM (`@prisma/client` e `@prisma/adapter-pg`)
 - **Autenticação:** Better Auth com login social via Google OAuth
-- **Inteligência Artificial & Streaming:** Vercel AI SDK (`ai` e `@ai-sdk/react`) integrado com Google Generative AI (`@ai-sdk/google` / Gemini) e renderização via [Streamdown](https://github.com/streamdown/streamdown)
+- **Inteligência Artificial & Streaming:** Vercel AI SDK (`ai` e `@ai-sdk/react`) integrado com Google Generative AI (`@ai-sdk/google` / Gemini) e renderização via Streamdown
 - **Estilização:** Tailwind CSS v4 e Lucide React (ícones)
 - **Componentes UI:** Radix UI primitives estilizados no padrão shadcn/ui
 - **Gerenciamento de Estado & Requisições:** TanStack React Query
