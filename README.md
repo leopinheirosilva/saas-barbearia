@@ -6,19 +6,19 @@ Plataforma moderna de gestão e agendamento de serviços em barbearias, com supo
 
 ## Tech Stack
 
-- **Framework:** [Next.js 16](https://nextjs.org/) (App Router & Server Actions)
-- **Biblioteca Front-End:** [React 19](https://react.dev/)
-- **Linguagem:** [TypeScript](https://www.typescriptlang.org/)
-- **Banco de Dados & ORM:** PostgreSQL com [Prisma ORM](https://www.prisma.io/) (`@prisma/client` e `@prisma/adapter-pg`)
-- **Autenticação:** [Better Auth](https://www.better-auth.com/) com login social via Google OAuth
-- **Inteligência Artificial & Streaming:** [Vercel AI SDK](https://sdk.vercel.ai/) (`ai` e `@ai-sdk/react`) integrado com Google Generative AI (`@ai-sdk/google` / Gemini) e renderização via [Streamdown](https://github.com/streamdown/streamdown)
-- **Estilização:** [Tailwind CSS v4](https://tailwindcss.com/) e [Lucide React](https://lucide.dev/) (ícones)
-- **Componentes UI:** [Radix UI primitives](https://www.radix-ui.com/) estilizados no padrão shadcn/ui
-- **Gerenciamento de Estado & Requisições:** [TanStack React Query](https://tanstack.com/query)
-- **Tema:** [next-themes](https://github.com/pacocoursey/next-themes) (suporte a Light e Dark Mode)
-- **Manipulação de Datas:** [date-fns](https://date-fns.org/) e [React Day Picker](https://daypicker.dev/)
-- **Notificações:** [Sonner](https://sonner.emilkowal.ski/)
-- **Server Actions Type-Safe:** [next-safe-action](https://next-safe-action.dev/)
+- **Framework:** Next.js 16 (App Router & Server Actions)
+- **Biblioteca Front-End:** React 19
+- **Linguagem:** TypeScript
+- **Banco de Dados & ORM:** PostgreSQL com Prisma ORM (`@prisma/client` e `@prisma/adapter-pg`)
+- **Autenticação:** Better Auth com login social via Google OAuth
+- **Inteligência Artificial & Streaming:** Vercel AI SDK (`ai` e `@ai-sdk/react`) integrado com Google Generative AI (`@ai-sdk/google` / Gemini) e renderização via [Streamdown](https://github.com/streamdown/streamdown)
+- **Estilização:** Tailwind CSS v4 e Lucide React (ícones)
+- **Componentes UI:** Radix UI primitives estilizados no padrão shadcn/ui
+- **Gerenciamento de Estado & Requisições:** TanStack React Query
+- **Tema:** next-themes (suporte a Light e Dark Mode)
+- **Manipulação de Datas:** date-fns e React Day Picker
+- **Notificações:** Sonner
+- **Server Actions Type-Safe:** next-safe-action
 
 ---
 
