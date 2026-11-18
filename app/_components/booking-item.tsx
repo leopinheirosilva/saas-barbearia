@@ -43,7 +43,7 @@ const BookingItem = ({ booking, onBookingCancelled }: BookingItemProps) => {
   const status = getStatus(booking);
   // Define o estilo dos status confirmado e finalizado
   const statusColor = isFutureBooking
-    ? "bg-muted text-green-700 p-2"
+    ? "bg-primary/15 text-green-700 p-2"
     : "bg-muted text-foreground p-2";
 
   return (

@@ -33,18 +33,24 @@ const Home = async () => {
       <Header />
       <PageContainer>
         {/* Homepage */}
-        <SearchInput />
+        <div className="p-5">
+          <SearchInput />
+        </div>
         <QuickSearchButtons />
-        <Image
-          src={banner}
-          alt="Agende agora!"
-          sizes="100vw"
-          className="h-auto w-full"
-        />
+        <div className="p-5">
+          <Image
+            src={banner}
+            alt="Agende agora!"
+            sizes="100vw"
+            className="h-auto w-full"
+          />
+        </div>
 
         <PageSection>
           {/* Seção Recomendados */}
-          <PageSectionTitle>Recomendados</PageSectionTitle>
+          <div className="px-5">
+            <PageSectionTitle>Recomendados</PageSectionTitle>
+          </div>
           <PageSectionScroller>
             {recommendedBarbershops.map((barbershop) => (
               <BarbershopItem key={barbershop.id} barbershop={barbershop} />
@@ -54,7 +60,9 @@ const Home = async () => {
 
         <PageSection>
           {/* Seção Populares */}
-          <PageSectionTitle>Populares</PageSectionTitle>
+          <div className="px-5">
+            <PageSectionTitle>Populares</PageSectionTitle>
+          </div>
           <PageSectionScroller>
             {popularBarbershops.map((barbershop) => (
               <BarbershopItem key={barbershop.id} barbershop={barbershop} />

@@ -53,11 +53,11 @@ export function CancelBookingSheet({
   const now = new Date();
   // Verifica se o agendamento é futuro
   const isFutureBooking = booking.date > now;
-  const status = isFutureBooking ? "Confirmado" : "Finalizado";
+  const status = isFutureBooking ? "CONFIRMADO" : "FINALIZADO";
   // Define os estilos dos status confirmado e finalizado
   const statusColor = isFutureBooking
-    ? "bg-green-900"
-    : "bg-muted text-foreground";
+    ? "bg-primary/15 text-green-700 p-2"
+    : "bg-muted text-foreground p-2";
 
   const handleCancel = async () => {
     // Função para lidar com o cancelamento
@@ -201,7 +201,8 @@ export function CancelBookingSheet({
               Voltar
             </Button>
             <Button
-              className="bg-destructive hover:bg-destructive/90 h-12 w-full shrink rounded-full font-semibold"
+              variant="destructive"
+              className="h-12 w-full shrink rounded-full font-semibold"
               onClick={() => setIsConfirming(true)}
               disabled={!isFutureBooking}
             >
@@ -255,9 +256,11 @@ export function CancelBookingSheet({
           </Card>
 
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isPending}>Voltar</AlertDialogCancel>
+            <AlertDialogCancel className="font-semibold" disabled={isPending}>
+              Voltar
+            </AlertDialogCancel>
             <AlertDialogAction
-              className="bg-destructive hover:bg-destructive/90"
+              className="bg-destructive font-semibold"
               onClick={handleCancel}
               disabled={isPending}
             >

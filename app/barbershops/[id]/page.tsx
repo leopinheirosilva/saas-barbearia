@@ -46,11 +46,11 @@ const BarbershopPage = async (props: { params: { id: string } }) => {
             <Button
               size="icon"
               variant="secondary"
-              className="overflow-clip rounded-full bg-gray-300 opacity-60"
+              className="overflow-clip rounded-full bg-gray-300/30"
               asChild
             >
               <Link href="/">
-                <ChevronLeft className="size-5" />
+                <ChevronLeft className="size-6 text-black" />
               </Link>
             </Button>
           </div>

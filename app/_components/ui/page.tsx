@@ -1,6 +1,6 @@
 export const PageContainer = ({ children }: { children: React.ReactNode }) => {
   // Page container component
-  return <div className="space-y-6 p-5 h-full">{children}</div>;
+  return <div className="h-full space-y-6 pb-5">{children}</div>;
 };
 
 export const PageSectionTitle = ({
@@ -10,7 +10,7 @@ export const PageSectionTitle = ({
 }) => {
   // Page section title component
   return (
-    <h2 className="text-foreground text-xs font-bold uppercase">{children}</h2>
+    <h2 className="text-foreground text-sm font-semibold uppercase">{children}</h2>
   );
 };
 
@@ -19,7 +19,15 @@ export const PageSection = ({ children }: { children: React.ReactNode }) => {
   return <div className="space-y-3">{children}</div>;
 };
 
-export const PageSectionScroller = ({ children }: { children: React.ReactNode }) => {
+export const PageSectionScroller = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   // Page section scroller component
-  return <div className="flex gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">{children}</div>;
+  return (
+    <div className="flex gap-4 overflow-x-auto pl-5 [&::-webkit-scrollbar]:hidden">
+      {children}
+    </div>
+  );
 };

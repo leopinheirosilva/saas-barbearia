@@ -14,7 +14,8 @@ import {
 } from "lucide-react";
 import { PageSectionScroller } from "./ui/page";
 
-const quickSearchOptions = [ // Opções de busca rápida
+const quickSearchOptions = [
+  // Opções de busca rápida
   { label: "Cabelo", icon: Scissors },
   { label: "Barba", icon: Zap },
   { label: "Acabamento", icon: Crown },
@@ -35,11 +36,12 @@ const QuickSearchButtons = () => {
 
   return (
     <PageSectionScroller>
-      {quickSearchOptions.map(({ label, icon: Icon }) => ( // Mapeia o botão para cada opção de busca rápida
+      {quickSearchOptions.map(({ label, icon: Icon }) => (
+        // Mapeia o botão para cada opção de busca rápida
         <Button
           key={label}
           variant="outline"
-          className="hover:bg-gray-10 flex items-center gap-2 rounded-full p-3 whitespace-nowrap"
+          className="flex items-center gap-2 rounded-full p-5 whitespace-nowrap hover:cursor-pointer"
           onClick={() => handleQuickSearch(label)}
         >
           <Icon size={18} />

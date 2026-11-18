@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <footer className=" bg-muted p-7">
       <p className="text-muted-foreground text-xs font-semibold text-center">
-        © 2024 Aparatuz Barbearias.
+        © 2026 Aparatus Barbearias.
       </p>
       <p className="text-xs text-muted-foreground text-center">Todos os direitos reservados.</p>
     </footer>

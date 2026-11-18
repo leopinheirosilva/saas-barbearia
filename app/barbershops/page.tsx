@@ -35,11 +35,13 @@ const SearchPage = async ({ searchParams }: PageProps<"/barbershops">) => {
     <main>
       <Header />
       <PageContainer>
-        <SearchInput />
+        <div className="p-5">
+          <SearchInput />
+        </div>
         <QuickSearchButtons />
 
         {search && (
-          <div className="mt-6">
+          <div className="mt-6 p-5">
             <h1 className="text-muted-foreground text-xl font-normal">
               Resultados para &quot;{search}&quot;
             </h1>
@@ -54,8 +56,8 @@ const SearchPage = async ({ searchParams }: PageProps<"/barbershops">) => {
             ) : (
               // Se nao houver um termo de busca, exibe tela de erro
               <div className="h-screen">
-                <div className="mt-6 flex h-64 items-center justify-center rounded-lg bg-gray-100">
-                  <p className="p-2 text-center text-gray-600">
+                <div className="mt-6 flex h-64 items-center justify-center rounded-lg bg-black/5">
+                  <p className="text-muted-foreground p-2 text-center">
                     Nenhuma barbearia encontrada com o serviço &quot;{search}
                     &quot;.
                     <br />

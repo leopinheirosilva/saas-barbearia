@@ -51,27 +51,17 @@ const MenuSheet = ({ triggerButton }: MenuSheetProps) => {
     setOpen(false);
   };
 
-  const categories = [
-    // Categorias do menu
-    "Cabelo",
-    "Barba",
-    "Acabamento",
-    "Sombrancelha",
-    "Massagem",
-    "Hidratação",
-  ];
-
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       {/* Botão que dispara o sheet */}
       {triggerButton && <SheetTrigger asChild>{triggerButton}</SheetTrigger>}
-      <SheetContent side="right" className="w-full max-w-sm p-0">
+      <SheetContent side="right" className="max-w-sm p-0">
         {session ? ( // Usuário Logado
-          <main>
+          <main className="mt-5 space-y-5">
             {/* Informações de login */}
-            <SheetHeader className="border-b">
+            <SheetHeader>
               <div className="flex items-center gap-4">
-                <Avatar className="size-16">
+                <Avatar className="size-10">
                   <AvatarImage
                     src={session.user?.image || ""}
                     alt="User avatar"
@@ -80,34 +70,36 @@ const MenuSheet = ({ triggerButton }: MenuSheetProps) => {
                     {session.user?.name?.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col">
                   <h2 className="text-base font-semibold">
                     {session.user?.name}
                   </h2>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-muted-foreground text-xs">
                     {session.user?.email}
                   </p>
                 </div>
               </div>
             </SheetHeader>
 
-            <div className="flex flex-col gap-4 px-4 py-6">
+            <Separator />
+
+            <div className="flex flex-col gap-4 px-2 space-y-2">
               {/* Menu Items */}
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-5">
                 <button
                   onClick={() => handleNavigation("/")}
-                  className="hover:bg-secondary flex items-center gap-3 rounded-lg px-4 py-3 text-left text-sm font-medium transition-colors"
+                  className="hover:bg-secondary flex items-center gap-3 rounded-lg px-4 text-left text-sm font-medium transition-colors"
                 >
-                  <HomeIcon className="size-5" />
-                  Início
+                  <HomeIcon className="size-6" />
+                  <h2 className="font-semibold">Início</h2>
                 </button>
 
                 <button
                   onClick={() => handleNavigation("/bookings")}
-                  className="hover:bg-secondary flex items-center gap-3 rounded-lg px-4 py-3 text-left text-sm font-medium transition-colors"
+                  className="hover:bg-secondary flex items-center gap-3 rounded-lg px-4 text-left text-sm font-medium transition-colors"
                 >
-                  <CalendarIcon className="size-5" />
-                  Agendamentos
+                  <CalendarIcon className="size-6" />
+                  <h2 className="font-semibold">Agendamentos</h2>
                 </button>
               </div>
 
@@ -161,8 +153,8 @@ const MenuSheet = ({ triggerButton }: MenuSheetProps) => {
 
             <SheetFooter className="border-t">
               <Button
-                variant="ghost"
-                className="w-full justify-start gap-2"
+                variant="outline"
+                className="w-full justify-start p-5"
                 onClick={handleLogout}
               >
                 <LogOutIcon className="size-5" />
@@ -173,70 +165,17 @@ const MenuSheet = ({ triggerButton }: MenuSheetProps) => {
         ) : (
           // Usuário Deslogado
           <main>
-            <SheetHeader className="border-b">
-              <h2 className="text-lg font-semibold">Menu</h2>
-            </SheetHeader>
-
-            <div className="flex flex-col gap-4 px-4 py-6">
+            <div className="mt-7 flex flex-col gap-4 px-4 py-6">
               <div className="flex items-center justify-between gap-3">
-                <p className="text-sl font-semibold">Olá. Faça seu login!</p>
+                <p className="text-xm pl-3">Olá. Faça seu login!</p>
                 <Button
                   onClick={handleLogin}
-                  className="w-13 rounded-md bg-green-900 p-4 text-white"
+                  className="bg-primary w-12 rounded-md p-4 text-white"
                 >
                   <LogInIcon />
                 </Button>
               </div>
-
-              {/* Menu Itens (disabled) */}
-              <div className="flex flex-col gap-3">
-                <button
-                  disabled
-                  className="text-muted-foreground flex cursor-not-allowed items-center gap-3 rounded-lg px-4 py-3 text-left text-sm font-medium opacity-50"
-                >
-                  <HomeIcon className="size-5" />
-                  Início
-                </button>
-
-                <button
-                  disabled
-                  className="text-muted-foreground flex cursor-not-allowed items-center gap-3 rounded-lg px-4 py-3 text-left text-sm font-medium opacity-50"
-                >
-                  <CalendarIcon className="size-5" />
-                  Agendamentos
-                </button>
-              </div>
-
-              <Separator />
-
-              {/* Categorias */}
-              <div>
-                <p className="text-muted-foreground mb-3 px-4 text-xs font-semibold uppercase">
-                  Categorias
-                </p>
-                <div className="flex flex-col gap-2">
-                  {categories.map((category) => (
-                    <button
-                      key={category}
-                      disabled
-                      className="text-muted-foreground cursor-default rounded-lg px-4 py-2 text-left text-sm opacity-50"
-                    >
-                      {category}
-                    </button>
-                  ))}
-                </div>
-              </div>
             </div>
-
-            <SheetFooter className="border-t">
-              <button
-                disabled
-                className="text-muted-foreground flex w-full cursor-not-allowed items-center justify-start gap-2 rounded-lg px-4 py-3 text-sm font-medium opacity-50"
-              >
-                <LogOutIcon className="size-5" />
-                Sair da conta
-              </button>
-            </SheetFooter>
           </main>
         )}
       </SheetContent>
