@@ -1,6 +1,5 @@
 "use client";
 
-// Imports
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import {
@@ -15,7 +14,6 @@ import {
 import { PageSectionScroller } from "./ui/page";
 
 const quickSearchOptions = [
-  // Opções de busca rápida
   { label: "Cabelo", icon: Scissors },
   { label: "Barba", icon: Zap },
   { label: "Acabamento", icon: Crown },
@@ -26,18 +24,15 @@ const quickSearchOptions = [
 ];
 
 const QuickSearchButtons = () => {
-  // Componente de botões de busca rápida
   const router = useRouter();
 
   const handleQuickSearch = (label: string) => {
-    // Função para navegar para a página de barbearias com o filtro aplicado
     router.push(`/barbershops?search=${encodeURIComponent(label)}`);
   };
 
   return (
     <PageSectionScroller>
       {quickSearchOptions.map(({ label, icon: Icon }) => (
-        // Mapeia o botão para cada opção de busca rápida
         <Button
           key={label}
           variant="outline"

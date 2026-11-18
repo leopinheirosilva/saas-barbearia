@@ -10,13 +10,13 @@ export const PageSectionTitle = ({
 }) => {
   // Page section title component
   return (
-    <h2 className="text-foreground text-sm font-semibold uppercase">{children}</h2>
+    <h2 className="text-foreground lg:font-medium text-sm font-semibold uppercase">{children}</h2>
   );
 };
 
 export const PageSection = ({ children }: { children: React.ReactNode }) => {
   // Page section component
-  return <div className="space-y-3">{children}</div>;
+  return <div className="space-y-3 lg:pb-10">{children}</div>;
 };
 
 export const PageSectionScroller = ({

@@ -30,6 +30,7 @@ export const ThemeToggle = () => {
     <Button
       variant="outline"
       size="icon"
+      className="hover:cursor-pointer"
       onClick={toggleTheme}
       aria-label={
         theme === "dark"

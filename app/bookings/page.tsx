@@ -1,9 +1,6 @@
 "use client";
 
-// Imports
 import { useState, useEffect } from "react";
-import Header from "@/app/_components/header";
-import Footer from "@/app/_components/footer";
 import BookingItem from "@/app/_components/booking-item";
 import { getUserBookings } from "@/app/_actions/get-user-bookings";
 import {
@@ -16,15 +13,15 @@ import {
   BarbershopService,
   Barbershop,
 } from "@/app/generated/prisma/client";
+import Header from "../_components/header";
+import Footer from "../_components/footer";
 
 type BookingWithRelations = Booking & {
-  // Inclui as relações service e barbershop
   service: BarbershopService;
   barbershop: Barbershop;
 };
 
 const BookingsPage = () => {
-  // Estado para armazenar os agendamentos confirmados e finalizados
   const [confirmedBookings, setConfirmedBookings] = useState<
     BookingWithRelations[]
   >([]);
@@ -33,7 +30,6 @@ const BookingsPage = () => {
   >([]);
 
   useEffect(() => {
-    // Função para carregar os agendamentos do usuário
     const loadBookings = async () => {
       const data = await getUserBookings();
       setConfirmedBookings(data.confirmedBookings);
@@ -43,7 +39,6 @@ const BookingsPage = () => {
   }, []);
 
   const handleBookingCancelled = (bookingId: string) => {
-    // Atualiza os estados ao cancelar um agendamento
     setConfirmedBookings((prev) =>
       prev.filter((booking) => booking.id !== bookingId),
     );
@@ -57,12 +52,13 @@ const BookingsPage = () => {
       <Header />
       <div>
         <PageContainer>
-          <div className="p-5 space-y-5">
-            {confirmedBookings.length > 0 && ( // Se houver agendamentos confirmados...
+          <div className="space-y-5 p-5">
+            {confirmedBookings.length > 0 && (
               <PageSection>
-                {/* Seçao de agendamentos confirmados */}
-                <PageSectionTitle>Confirmados</PageSectionTitle>
-                <div className="flex flex-col gap-3">
+                <div className="lg:px-30">
+                  <PageSectionTitle>Confirmados</PageSectionTitle>
+                </div>
+                <div className="flex flex-col gap-3 lg:px-30">
                   {confirmedBookings.map((booking) => (
                     <BookingItem
                       key={booking.id}
@@ -73,11 +69,12 @@ const BookingsPage = () => {
                 </div>
               </PageSection>
             )}
-            {finalizedBookings.length > 0 && ( // Se houver agendamentos finalizados...
+            {finalizedBookings.length > 0 && (
               <PageSection>
-                {/* Seçao de agendamentos finalizados */}
-                <PageSectionTitle>Finalizados</PageSectionTitle>
-                <div className="flex flex-col gap-3">
+                <div className="lg:px-30">
+                  <PageSectionTitle>Finalizados</PageSectionTitle>
+                </div>
+                <div className="flex flex-col gap-3 lg:px-30">
                   {finalizedBookings.map((booking) => (
                     <BookingItem key={booking.id} booking={booking} />
                   ))}
@@ -85,9 +82,8 @@ const BookingsPage = () => {
               </PageSection>
             )}
             {confirmedBookings.length === 0 &&
-              finalizedBookings.length === 0 && ( // Se não houver agendamentos...
+              finalizedBookings.length === 0 && (
                 <PageSection>
-                  {/* Tela com o texto: "Voce nao possui agendamentos" */}
                   <p className="text-muted-foreground text-center">
                     Você não possui agendamentos
                   </p>
@@ -95,8 +91,6 @@ const BookingsPage = () => {
               )}
           </div>
         </PageContainer>
-      </div>
-      <div>
         <Footer />
       </div>
     </main>
