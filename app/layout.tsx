@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: "Aparatus",
   description: "saas para agendamento de barbearias",
   icons: {
-    icon: "/",
+    icon: "/favicon.png",
   },
 };
 
