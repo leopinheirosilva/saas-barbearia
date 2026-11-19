@@ -35,7 +35,7 @@ const Home = async () => {
       <PageContainer>
         <div className="lg:flex">
           <div className="lg:w-[70vw] lg:pl-30">
-            <div className="p-5 pl-0">
+            <div className="p-5 lg:pl-0">
               <SearchInput />
             </div>
             <QuickSearchButtons />
