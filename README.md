@@ -2,7 +2,7 @@
 
 Plataforma moderna de gestão e agendamento de serviços em barbearias, com suporte a busca de estabelecimentos, agendamento de horários em tempo real, gerenciamento de reservas e assistente virtual inteligente (**Agenda.ai**) integrado via IA generativa para agendamentos conversacionais.
 
-![Demonstração da Aplicação](public/demo.png)
+![Demonstração da Aplicação para dispositivos mobile](public/demo-01.png)
 
 ## Tech Stack
 
@@ -46,6 +46,9 @@ Plataforma moderna de gestão e agendamento de serviços em barbearias, com supo
   - Login e gerenciamento de sessão simplificado e seguro com Better Auth.
 - **Tema Claro / Escuro:**
   - Alternância de tema Dark/Light com persistência e adaptação de logos e componentes visuais.
+- **Interface Responsiva**
+
+![Demonstração da Aplicação para dispositivos desktop](public/demo-02.png)
 
 ---
 
@@ -71,7 +74,7 @@ O banco relacional estruturado no Prisma conta com as seguintes entidades:
 ### 1. Clonar o repositório
 
 ```bash
-git clone <url-do-repositorio>
+git clone url-do-repositorio
 cd saas-barbearia
 ```
 
@@ -128,7 +131,7 @@ pnpm tsx prisma/seed.ts
 pnpm run dev
 ```
 
-Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver a aplicação.
+Abra http://localhost:3000 no seu navegador para ver a aplicação.
 
 ---
 
