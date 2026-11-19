@@ -48,17 +48,19 @@ const Home = async () => {
                   </p>
                 </Link>
               </div>
-              <div className="mt-3 grid grid-cols-2 gap-7">
-                {confirmedBookings.length > 0 ? (
-                  confirmedBookings.map((booking) => (
+              {confirmedBookings.length > 0 ? (
+                <div className="mt-3 grid grid-cols-2 gap-7">
+                  {confirmedBookings.map((booking) => (
                     <BookingItemOverview key={booking.id} booking={booking} />
-                  ))
-                ) : (
+                  ))}
+                </div>
+              ) : (
+                <div className="mt-6 flex h-95 items-center justify-center rounded-lg bg-black/5">
                   <p className="text-muted-foreground text-sm">
                     Você não possui agendamentos
                   </p>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
           <div className="p-5">

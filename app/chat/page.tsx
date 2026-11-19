@@ -12,15 +12,15 @@ const WELCOME_MESSAGE = `Olá! Sou o <strong>Agenda.ai</strong>, seu assistente 
 Estou aqui para te auxiliar a agendar seu corte ou barba, encontrar as barbearias disponíveis perto de você e responder às suas dúvidas.`;
 
 export default function ChatPage() {
-  const initializeRef = useRef(false); // Evita múltiplas inicializações;
+  const initializeRef = useRef(false);
   const { messages, sendMessage, setMessages } = useChat({
     transport: new DefaultChatTransport({
       api: "/api/chat",
     }),
   });
 
-  const messagesEndRef = useRef<HTMLDivElement>(null); // Referência para o final da lista de mensagens
-  const messagesContainerRef = useRef<HTMLDivElement>(null); // Referência para o container das mensagens
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -29,20 +29,18 @@ export default function ChatPage() {
   useEffect(() => {
     if (!initializeRef.current && messages.length === 0) {
       initializeRef.current = true;
-      setMessages(
-        [
-          {
-            id: "welcome-message",
-            role: "assistant",
-            parts: [
-              {
-                type: "text" as const,
-                text: WELCOME_MESSAGE,
-              },
-            ],
-          },
-        ],
-      );
+      setMessages([
+        {
+          id: "welcome-message",
+          role: "assistant",
+          parts: [
+            {
+              type: "text" as const,
+              text: WELCOME_MESSAGE,
+            },
+          ],
+        },
+      ]);
     }
   }, [messages.length, setMessages]);
 
@@ -51,11 +49,9 @@ export default function ChatPage() {
   }, [messages]);
 
   const handleSendMessage = (text: string) => {
-    sendMessage(
-      {
-        text,
-      },
-    );
+    sendMessage({
+      text,
+    });
   };
 
   return (

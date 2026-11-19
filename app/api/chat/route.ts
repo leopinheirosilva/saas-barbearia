@@ -1,4 +1,3 @@
-// Imports
 import { streamText, convertToModelMessages, tool, stepCountIs } from "ai";
 import { google } from "@ai-sdk/google";
 import z from "zod";
@@ -7,18 +6,14 @@ import { getDateAvailableTimeSlots } from "./../../_actions/get-date-available-t
 import { createBooking } from "@/app/_actions/create-booking";
 
 export const POST = async (request: Request) => {
-  // Manipulação da requisição POST
   const { messages } = await request.json();
 
   const result = streamText({
-    // Configuração do modelo de IA
     model: google("gemini-3.5-flash"),
     stopWhen: stepCountIs(10),
-    // Informacoes uteis para o modelo de IA
     system: `Você é o Agenda.ai, um assistente virtual de agendamento de barbearias.
 
     DATA ATUAL: Hoje é ${new Date().toLocaleDateString("pt-BR", {
-      // Define qual a data atual
       weekday: "long",
       year: "numeric",
       month: "long",
@@ -78,27 +73,21 @@ export const POST = async (request: Request) => {
     - Quando o usuário mencionar "hoje", "amanhã", "depois de amanhã" ou dias da semana, calcule a data correta automaticamente`,
 
     messages: convertToModelMessages(messages),
-    // Definição das ferramentas
     tools: {
       searchBarbershops: tool({
-        // Ferramenta para buscar barbearias
         description:
           "Pesquisa barbearias pelo nome. Se nenhum nome é fornecido, retorna todas as barbearias.",
         inputSchema: z.object({
-          // Define o esquema de entrada
           name: z.string().optional().describe("Nome opcional da barbearia"),
         }),
         execute: async ({ name }) => {
-          // Lógica de execução da ferramenta
           if (!name?.trim()) {
-            // Se nenhum nome for fornecido, retorna todas as barbearias
             const barbershops = await prisma.barbershop.findMany({
               include: {
                 services: true,
               },
             });
             return barbershops.map((barbershop) => ({
-              // Mapeia os dados das barbearias
               name: barbershop.name,
               address: barbershop.address,
               services: barbershop.services.map((service) => ({
@@ -109,7 +98,6 @@ export const POST = async (request: Request) => {
             }));
           }
           const barbershops = await prisma.barbershop.findMany({
-            // Busca barbearias pelo nome
             where: {
               name: {
                 contains: name,
@@ -121,11 +109,9 @@ export const POST = async (request: Request) => {
         },
       }),
       getAvailableTimeSlotsForBarbershop: tool({
-        // Ferramenta que verifica se tem horario disponivel para barbearia
         description:
           "Obtém os horários disponíveis para uma barbearia em uma data específica.",
         inputSchema: z.object({
-          // Define o esquema de entrada
           barbershopId: z.string().describe("ID da barbearia"),
           date: z
             .string()
@@ -134,14 +120,12 @@ export const POST = async (request: Request) => {
             ),
         }),
         execute: async ({ barbershopId, date }) => {
-          // Lógica de execução da ferramenta
           const parsedDate = new Date(date);
           const result = await getDateAvailableTimeSlots({
             barbershopId,
             date: parsedDate,
           });
           if (result.serverError || result.validationErrors) {
-            // Verifica se há erros
             return {
               error:
                 result.validationErrors?._errors?.[0] ||
@@ -149,7 +133,6 @@ export const POST = async (request: Request) => {
             };
           }
           return {
-            // Retorna os horários disponíveis
             barbershopId,
             date,
             availableTimeSlots: result.data,
@@ -157,25 +140,21 @@ export const POST = async (request: Request) => {
         },
       }),
       createBooking: tool({
-        // Ferramenta para agendamento via chat
         description:
           "Criar o agendamento para um serviço em uma data específica",
         inputSchema: z.object({
-          // Define o esquema de entrada
           serviceId: z.string().describe("ID do serviço"),
           date: z
             .string()
             .describe("Data em ISO String para a qual deseja agendar"),
         }),
         execute: async ({ serviceId, date }) => {
-          // Lógica de execução da ferramenta
           const parsedDate = new Date(date);
           const result = await createBooking({
             serviceId,
             date: parsedDate,
           });
           if (result.serverError || result.validationErrors) {
-            // Verifica se há erros
             return {
               error:
                 result.validationErrors?._errors?.[0] ||
@@ -183,7 +162,6 @@ export const POST = async (request: Request) => {
             };
           }
           return {
-            // Retorna sucesso se o agendamento for criado
             success: true,
             message: "Agendamento criado com sucesso",
           };
